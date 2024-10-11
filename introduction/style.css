@@ -16,7 +16,6 @@ section {
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   transition: all 0.3s ease;
-  background-color: #f3f3f3;
 }
 a {
   text-decoration: none;
@@ -43,4 +42,55 @@ article {
   align-items: center;
   justify-content: center;
   gap: 10rem;
+}
+
+ul li {
+  list-style: none;
+}
+
+.ability-container {
+  display: flex;
+}
+.about {
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 20px;
+}
+.about-first {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-second {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+}
+.center {
+  width: 700px;
+  margin-right: 140px;
+}
+.about-container {
+  margin-top: 200px;
+}
+
+span {
+  font-size: 25px;
+}
+.contact-container {
+  margin-top: 100px;
+}
+.contact {
+  border: 1px solid black;
+  width: 550px;
+  padding: 10px;
+  border-radius: 24px;
+  margin-top: 100px;
+  box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.5);
+}
+.contact > :first-child {
+  font-weight: bold;
 }
