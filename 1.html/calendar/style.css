@@ -1,0 +1,36 @@
+td {
+  border: 1px solid black;
+  padding: 10px;
+}
+.calendar-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 200px;
+}
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  margin: auto;
+}
+tbody tr td:first-child,
+.holiday {
+  color: red;
+}
+
+.notthismonth {
+  opacity: 0.5;
+  color: gray;
+}
+.notthismonth-holiday {
+  color: red;
+  opacity: 0.5;
+}
+img {
+  width: 1000px;
+  height: 300px;
+  object-fit: cover;
+}
+body {
+  text-align: center;
+}

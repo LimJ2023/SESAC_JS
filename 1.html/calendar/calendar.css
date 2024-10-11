@@ -1,0 +1,40 @@
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+img {
+  width: 50%;
+  object-fit: cover;
+}
+
+#calendar {
+  width: 100%;
+}
+
+#calendar th {
+  background-color: #dbdbdb;
+  width: 14%;
+}
+
+#calendar td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #f3f3f3;
+}
+
+#calendar th:first-child,
+#calendar td:first-child {
+  color: #ff0000;
+}
+
+#calendar th:last-child,
+#calendar td:last-child {
+  color: #0000ff;
+}
+
+body {
+  font-family: arial, sans-serif;
+  padding: 20px;
+}

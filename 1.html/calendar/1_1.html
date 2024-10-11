@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>달력</title>
+</head>
+
+<body>
+    <h1>calendar</h1>
+    <style>
+        h1,
+        h2,
+        h3 {
+            text-align: center;
+        }
+
+        img {
+            width: 50%;
+            object-fit: cover;
+        }
+
+
+        #calendar {
+
+            width: 100%;
+        }
+
+        #calendar th {
+            background-color: #dbdbdb;
+            width: 14%;
+        }
+
+        #calendar td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #f3f3f3;
+        }
+
+        #calendar th:first-child,
+        #calendar td:first-child {
+            color: #ff0000;
+        }
+
+        #calendar th:last-child,
+        #calendar td:last-child {
+            color: #0000ff;
+        }
+
+        body {
+            font-family: arial, sans-serif;
+            padding: 20px;
+        }
+    </style>
+    <div class="calendar-links">
+        <a href="./12.html">
+            <h3>12월</h3>
+        </a>
+        <h2>1월</h2>
+        <a href="./2.html">
+            <h3>2월</h3>
+        </a>
+    </div>
+    <table id="calendar">
+        <thead>
+            <tr>
+                <th colspan="7" id="image"><img src="./1.jpg" alt=""></th>
+            </tr>
+            <tr>
+                <th>일</th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+                <th>목</th>
+                <th>금</th>
+                <th>토</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>31</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+                <td>11</td>
+                <td>12</td>
+                <td>13</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>15</td>
+                <td>16</td>
+                <td>17</td>
+                <td>18</td>
+                <td>19</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td>22</td>
+                <td>23</td>
+                <td>24</td>
+                <td>25</td>
+                <td>26</td>
+                <td>27</td>
+            </tr>
+            <tr>
+                <td>28</td>
+                <td>29</td>
+                <td>30</td>
+                <td>31</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
