@@ -17,6 +17,9 @@ tbody tr td:first-child,
 .holiday {
   color: red;
 }
+tbody tr td:nth-child(7) {
+  color: mediumblue;
+}
 
 .notthismonth {
   opacity: 0.5;
