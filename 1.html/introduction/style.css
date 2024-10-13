@@ -120,6 +120,6 @@ ul li {
     margin-top: 100px;
     box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.5);
 }
-.contact > :first-child {
+.contact p span:first-child {
     font-weight: bold;
 }
