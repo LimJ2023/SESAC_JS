@@ -1,0 +1,73 @@
+* {
+  /* padding과 border가 너비에 포함됨 */
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(../images/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  font-family: "Noto Sans";
+}
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+button {
+  border: none;
+  cursor: pointer;
+}
+.container {
+  /* 보더도 왜 회색으로 보이는거냐... */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  width: 420px;
+  height: 530px;
+  /* 투명도 낮게하면 너무 밝아보이는듯? */
+  background-color: rgba(36, 166, 222, 0.4);
+  /* 블러처리 */
+  backdrop-filter: blur(5px);
+  padding: 40px 0;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 5px;
+  padding: 20px;
+}
+.login input {
+  width: 100%;
+  height: 40px;
+  padding: 0 0 0 10px;
+  border: none;
+  border-radius: 5px;
+}
+.login > button {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: floralwhite;
+  margin-top: 50px;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.login .social {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.login .social button {
+  width: 150px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgba(246, 252, 255, 0.5);
+  /* 블러처리 */
+  backdrop-filter: blur(5px);
+}

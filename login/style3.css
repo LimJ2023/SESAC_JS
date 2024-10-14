@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container input {
+  width: 400px;
+  height: 50px;
+  padding: 10px;
+  margin: 10px;
+}
+.square {
+  position: absolute;
+  width: 200vw;
+  height: 200vh;
+  transform-origin: center;
+  opacity: 0.9;
+  transition: all 0.5s ease;
+}
+body:hover .square {
+  opacity: 0.5;
+}
+/* 일단 45도로 꺾으면 비슷해짐 나머지도 45deg로 ㄱㄱ */
+.nemo1 {
+  background-color: orange;
+  transform: rotate(45deg) translate(0, 50%);
+  z-index: 1;
+}
+body:hover .nemo1 {
+  transform: rotate(45deg) translate(0, 80%);
+}
+
+.nemo2 {
+  background-color: crimson;
+  transform: rotate(-45deg) translate(20%, 50%);
+  z-index: 2;
+}
+body:hover .nemo2 {
+  transform: rotate(-45deg) translate(20%, 80%);
+}
+
+.nemo3 {
+  background-color: mediumslateblue;
+  transform: rotate(-45deg) translate(-20%, -50%);
+  z-index: 4;
+}
+body:hover .nemo3 {
+  transform: rotate(-45deg) translate(-20%, -80%);
+}
+
+.nemo4 {
+  background-color: lightskyblue;
+  transform: rotate(45deg) translate(20%, -50%);
+  z-index: 3;
+}
+body:hover .nemo4 {
+  transform: rotate(45deg) translate(20%, -80%);
+}
