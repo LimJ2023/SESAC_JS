@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            background-color: cornflowerblue;
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            margin: 5px;
+        }
+
+        .rel {
+            background-color: orange;
+            position: relative;
+            top: 50px;
+            left: 100px;
+        }
+
+        .cat {
+            width: 300px;
+            height: 200px;
+            background-image: url(../2.css/images/cat.jpg);
+            background-size: 100% 100%;
+        }
+
+        #cat2 {
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>1</div>
+    <div class="rel">2</div>
+    <div>3</div>
+    <div class="cat">4 <span id="cat2">귀여운 고양이</span></div>
+</body>
+
+</html>

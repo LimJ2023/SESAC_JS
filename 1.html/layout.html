@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>레이아웃</title>
+    <style>
+        header {
+            background-color: #555555;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #cccccc;
+            padding: 20px;
+            float: left;
+            width: 30%;
+            height: 300px;
+        }
+
+        article {
+            background-color: mediumseagreen;
+            height: 300px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        footer {
+            color: white;
+            background-color: #555555;
+            text-align: center;
+            padding: 10px;
+        }
+
+        @media (max-width: 600px) {
+
+            nav,
+            article {
+                float: left;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>도시</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>서울</li>
+            <li>부산</li>
+            <li>세종</li>
+            <li>제주</li>
+        </ul>
+    </nav>
+    <section>
+        <article>
+            <h2>서울</h2>
+            <p>서울에 대한 정보</p>
+        </article>
+    </section>
+    <footer>
+        푸터 추가
+    </footer>
+</body>
+
+</html>

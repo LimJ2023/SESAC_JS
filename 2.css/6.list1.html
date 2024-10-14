@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style-type: none;
+        }
+
+        .icon::before {
+            content: '★ ';
+            color: orange;
+        }
+
+        .icon::after {
+            content: ' ★';
+            color: orange;
+        }
+
+        /* li::before {
+            content: 'x ';
+        } */
+        .secondul li::before {
+            content: 'x ';
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li class="icon">아메리카노</li>
+        <ul class="secondul">
+            <li>아이스</li>
+            <li>핫</li>
+        </ul>
+        <li class="icon">카페라떼</li>
+        <li class="icon">에스프레소</li>
+    </ul>
+</body>
+
+</html>

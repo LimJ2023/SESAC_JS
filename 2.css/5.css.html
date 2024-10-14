@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            color: white;
+            position: relative;
+        }
+
+        #div1 {
+            background-color: orange;
+            z-index: 5;
+        }
+
+        #div2 {
+            background-color: red;
+            position: relative;
+            bottom: 50px;
+            z-index: 2;
+        }
+
+        #div3 {
+            background-color: blue;
+            position: relative;
+            bottom: 100px;
+            z-index: 3;
+        }
+
+        #div4 {
+            background-color: yellow;
+            position: relative;
+            bottom: 150px;
+            z-index: 4;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>레이어 상하위 z-index를 통한 우선순위 변경하기</h1>
+    <div id="div1">1</div>
+    <div id="div2">2</div>
+    <div id="div3">3</div>
+    <div id="div4">4</div>
+</body>
+
+</html>
