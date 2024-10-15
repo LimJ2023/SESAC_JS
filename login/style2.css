@@ -6,7 +6,7 @@
 body {
   background-image: url(../images/bg.jpg);
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   text-align: center;
   font-family: "Noto Sans";
 }
@@ -27,7 +27,7 @@ button {
   width: 420px;
   height: 530px;
   /* 투명도 낮게하면 너무 밝아보이는듯? */
-  background-color: rgba(36, 166, 222, 0.4);
+  background-color: rgba(36, 166, 222, 0.2);
   /* 블러처리 */
   backdrop-filter: blur(5px);
   padding: 40px 0;

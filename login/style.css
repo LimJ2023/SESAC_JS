@@ -65,11 +65,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
 }
-.login,
+/* .login,
 .login h1 {
   cursor: pointer;
-}
+} */
 .login label h1 {
   position: relative;
   bottom: 130px;
@@ -82,14 +83,14 @@ body {
 }
 
 /* 클릭했을 때 밑에있는 div가 올라오도록... */
-.login:active {
+.login:hover {
   height: 500px;
   top: -300px;
 }
-.login:active h1 {
+.login:hover h1 {
   font-size: 40px;
   bottom: 30px;
 }
-.login:active input {
+.login:hover input {
   display: flex;
 }

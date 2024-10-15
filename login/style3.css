@@ -34,6 +34,7 @@ body:hover .square {
   opacity: 0.5;
 }
 /* 일단 45도로 꺾으면 비슷해짐 나머지도 45deg로 ㄱㄱ */
+/* z-index를 설정하면 4번 네모가 1번 네모를 가리는 문제 */
 .nemo1 {
   background-color: orange;
   transform: rotate(45deg) translate(0, 50%);
