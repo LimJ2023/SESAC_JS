@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: bisque;
+            /* 내가 어떤 요소를 바꿀건지 결정 */
+            transition-property: width, height;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
+        }
+
+        .square:hover {
+            width: 200px;
+            height: 200px;
+        }
+
+        button {
+            width: 100px;
+            height: 50px;
+            color: black;
+            transition-property: color;
+            transition-duration: 1s;
+            transition-timing-function: ease;
+
+        }
+
+        button:hover {
+            color: red;
+        }
+
+        .image {
+            width: 200px;
+            transition-property: transform;
+            transition-duration: 0.5s;
+            transition-timing-function: ease;
+        }
+
+        .image:hover {
+            transform: rotate(180deg);
+        }
+
+        .gradient {
+            height: 50px;
+            background: linear-gradient(to right, #ff0000, #00ff00);
+            transition-property: background;
+        }
+
+        .gradient:hover {
+            background: linear-gradient(to right, #00ff00, #00f);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="square"></div>
+    <br>
+    <button>Hover me</button>
+    <br>
+    <img class="image" src="../images/movie3.jpg" alt="영화1">
+    <br>
+    <div class="gradient">Hover me for gradient effect</div>
+</body>
+
+</html>

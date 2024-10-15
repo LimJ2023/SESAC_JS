@@ -74,8 +74,7 @@
         .image {
             width: 200px;
             height: 200px;
-            animation: shake 2s linear 0s infinite alternate;
-
+            animation: shake 0.5s linear 0s infinite;
             position: relative;
         }
 
@@ -85,11 +84,11 @@
             }
 
             25% {
-                transform: translateX(20px);
+                transform: translateX(-10px) rotate(-5deg);
             }
 
             75% {
-                transform: translateX(40px);
+                transform: translateX(10px) rotate(5deg);
             }
 
             100% {
