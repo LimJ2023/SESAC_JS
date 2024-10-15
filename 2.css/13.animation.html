@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        @keyframes moveLeft {
+            0% {
+                left: 0;
+            }
+
+            100% {
+                left: 200px;
+            }
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            animation-name: moveLeft;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-delay: 0.5s;
+            animation-iteration-count: infinite;
+            position: relative;
+            animation-direction: alternate;
+        }
+
+        .text {
+            color: black;
+            animation-name: fadeOut;
+            animation-duration: 2s;
+            animation-timing-function: ease;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+            border-radius: 30%;
+            animation: rotateAndScale 2s ease 1s infinite alternate;
+            position: relative;
+        }
+
+        @keyframes rotateAndScale {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.2);
+            }
+
+            100% {
+                transform: rotate(36deg) scale(1);
+            }
+
+        }
+
+        .image {
+            width: 200px;
+            height: 200px;
+            animation: shake 2s linear 0s infinite alternate;
+
+            position: relative;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(20px);
+            }
+
+            75% {
+                transform: translateX(40px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <br>
+    <p class="text">Fade out Animation</p>
+    <br>
+    <div class="circle"></div>
+    <br>
+    <img class="image" src="../images/movie2.jpg" alt="">
+</body>
+
+</html>

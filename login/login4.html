@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style4.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #333, rgb(39, 6, 79), #333);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .main {
+            width: 300px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #333;
+            box-shadow: 0 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            color: #fff;
+            font-size: 2.3rem;
+            display: flex;
+            justify-content: center;
+            margin: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+        }
+
+        input {
+            width: 60%;
+            height: 20px;
+            background: whitesmoke;
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: purple;
+            color: #fff;
+            width: 240px;
+            height: 50px;
+            border-radius: 10px;
+            border: none;
+
+        }
+
+        button:hover {
+            background: mediumorchid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="signup">
+                <form action="">
+                    <label for="">
+                        sign up
+                    </label>
+
+                    <input type="text" placeholder="Username">
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password"> <br>
+                    <button>Sign up</button>
+                </form>
+            </div>
+            <div class="login">
+                <form action="">
+                    <label for="">
+                        Login
+                    </label>
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password">
+                    <button>Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
