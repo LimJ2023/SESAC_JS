@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        const person = {
+            name: '요한1',
+            address: '동대문구'
+        }
+        function sayHello() {
+            console.log('hello');
+            //document.write('<h1>hello</h1>');
+            // for (let i = 1; i <= 5; i++) {
+            //     document.write("숫자 : " + i + "<br>");
+            // }
+            const h1 = document.getElementsByTagName('h1');
+            h1[0].textContent = "내 이름은 " + person.name;
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>헬로우 월드, JS</h1>
+    <button onclick=sayHello()>Hello</button>
+</body>
+
+</html>

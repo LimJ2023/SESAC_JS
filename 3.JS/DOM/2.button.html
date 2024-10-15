@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        let isRed = false;
+        const changeText = () => {
+            const mytext = document.getElementById('mytext');
+            mytext.textContent = '글자가 변경되었습니다.';
+
+        }
+        const changeColor = () => {
+            const myColor = document.getElementById('mytext');
+            console.log(isRed);
+            isRed = !isRed
+            if (isRed === true) {
+                myColor.style = 'color: red;';
+            } else {
+                myColor.style = 'color: blue;';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <p id="mytext">이 텍스트의 글자를 변경해 보시오</p>
+    <button onclick=changeColor()>텍스트 글자색 빨간색,파란색 토글!</button>
+    <button onclick=changeText()>텍스트를 바꾸기</button>
+</body>
+
+</html>
