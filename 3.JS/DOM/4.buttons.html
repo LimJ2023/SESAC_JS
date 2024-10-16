@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        function number_inc() {
+            // let number = document.getElementById('number');
+            // number.textContent++;
+            // console.log("숫자 증가시키기 숫자 : ", number);
+            let result = document.getElementById('number');
+            result.textContent = Number(result.textContent) + 1;
+        }
+        function number_dec() {
+            number = document.getElementById('number');
+            let num = number.textContent;
+            num--;
+            number.textContent = num;
+        }
+        function number_multiply() {
+            number = document.getElementById('number');
+            let num = number.textContent * 2;
+            number.textContent = num;
+        }
+        function number_division() {
+            number = document.getElementById('number');
+            let num = number.textContent / 2;
+            number.textContent = num;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>버튼튼튼튼올리고내리기</h1>
+    <div id="number">0</div>
+    <div><button onclick=number_inc()>+1</button> <button onclick=number_dec()>-1</button>
+    </div>
+    <div><button onclick="number_multiply()">*2</button> <button onclick="number_division()">/2</button></div>
+</body>
+
+</html>

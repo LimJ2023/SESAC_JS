@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .bar {
+            width: 0;
+            height: 20px;
+            background-color: chartreuse;
+            transition-property: width;
+            transition-timing-function: linear;
+            animation: fill 0s linear 0s;
+            animation-play-state: paused;
+        }
+
+        @keyframes fill {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .fillBar {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>프로그래스 바를 만들어보기</h1>
+    <input id="duration" type="number" placeholder="초 입력" min="1">
+    <button onclick="start()">시작</button>
+    <button onclick="reset()">초기화</button>
+    <div class="bar" id="progressBar"><span id="per"></span></div>
+
+
+
+    <script>
+        function start() {
+            const bar = document.querySelector('.bar');
+            const duration = document.getElementById('duration').value;
+            console.log(document.getElementById('duration').value)
+
+
+            bar.style.transitionDuration = duration;
+            bar.classList.add('fillBar');
+
+            bar.style.animationDuration = duration + 's';
+            bar.style.animationPlayState = "running";
+            console.log(bar);
+
+        }
+        function reset() {
+            const bar = document.querySelector('.bar');
+            bar.classList.remove('fillBar');
+            bar.style.animationPlayState = "paused";
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

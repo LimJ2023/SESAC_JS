@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>셀렉트 박스</h1>
+    <select name="selector" id="selector" onchange="fruitDisplay()">
+        <option value="apple">사과</option>
+        <option value="banana">바나나</option>
+        <option value="orange">오렌지</option>
+    </select>
+    <div id="fruit"></div>
+    <button onclick="fruitDisplay()">고르기</button>
+
+    <script>
+        function fruitDisplay() {
+            const fruit = document.getElementById('selector').value;
+            let result = document.getElementById('fruit');
+            console.log(fruit);
+            // document.write(`이것은 ${fruit} 입니다.`);
+
+
+            switch (fruit) {
+                case "apple":
+                    console.log("이것은 사과 입니다.");
+                    // result.textContent = "이것은 <b>사과</b> 입니다.";
+                    // result.innerHTML = "이것은 <b>사과</b> 입니다.";
+
+                    // 새로운 dom Node를 만들기
+                    var newParagraph = document.createElement('p');
+                    newParagraph.innerHTML = "이것은 <b>사과</b> 입니다.";
+                    document.body.appendChild(newParagraph);
+                    break;
+                case "banana":
+                    console.log("이것은 바나나 입니다.");
+                    var newParagraph2 = document.createElement('p');
+                    newParagraph2.innerHTML = "이것은 <b>바나나</b> 입니다.";
+                    document.body.appendChild(newParagraph2);
+                    break;
+                case "orange":
+                    console.log("이것은 오렌지 입니다.");
+                    var newParagraph = document.createElement('p');
+                    newParagraph.innerHTML = "이것은 <b>오렌지</b> 입니다.";
+                    document.body.appendChild(newParagraph);
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

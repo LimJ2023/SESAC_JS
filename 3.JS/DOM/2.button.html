@@ -1,33 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script>
-        let isRed = false;
-        const changeText = () => {
-            const mytext = document.getElementById('mytext');
-            mytext.textContent = '글자가 변경되었습니다.';
-
+    <style>
+        p {
+            color: red;
         }
-        const changeColor = () => {
-            const myColor = document.getElementById('mytext');
-            console.log(isRed);
-            isRed = !isRed
-            if (isRed === true) {
-                myColor.style = 'color: red;';
-            } else {
-                myColor.style = 'color: blue;';
-            }
-        }
-    </script>
+    </style>
 </head>
 
 <body>
     <p id="mytext">이 텍스트의 글자를 변경해 보시오</p>
     <button onclick=changeColor()>텍스트 글자색 빨간색,파란색 토글!</button>
     <button onclick=changeText()>텍스트를 바꾸기</button>
+    <br><br>
+    <!-- <p id="text2">이 텍스트를 사진으로 바꿔보세요.</p>
+    <select name="cats" id="cats">
+        <option value="cat1" name="cats">1번 고양이</option>
+        <option value="cat2" name="cats">2번 고양이</option>
+        <option value="cat3" name="cats">3번 고양이</option>
+    </select>
+    <button onclick=selectCat()>내가 고른 번호로 바꾸기!</button>
+    <button onclick=changeCat()>일반 고양이로 바꾸기!</button> -->
+
+    <script>
+        let selectedCat;
+        let url = "../../images/cat.jpg";
+        const cats = [{
+            no: 'cat1',
+            url: "/images/cat.jpg"
+        },
+        {
+            no: 'cat2',
+            url: "/images/movie1.jpg"
+        },
+        {
+            no: 'cat3',
+            url: "/images/kita.jpg"
+        }]
+        let isRed = false;
+        let text2 = document.getElementById('text2');
+        const changeText = () => {
+            const mytext = document.getElementById('mytext');
+            mytext.textContent = '글자가 변경되었습니다.';
+
+        }
+        const changeColor = () => {
+            const mytext = document.getElementById('mytext');
+            console.log(mytext);
+            const currentColor = mytext.style.color;
+            console.log(currentColor);
+            // isRed = !isRed
+            // if (isRed === true) {
+            //     myColor.style = 'color: red;';
+            // } else {
+            //     myColor.style = 'color: blue;';
+            // }
+            // html+css가 적용된 상태를 불러오고 싶다면?
+            const currentColor2 = window.getComputedStyle(mytext).color;
+            console.log(currentColor2);
+
+            if (currentColor2 === 'rgb(255, 0, 0)') {
+                mytext.style.color = 'rgb(0, 0, 255)';
+            } else {
+                mytext.style.color = 'rgb(255, 0, 0)';
+            }
+        }
+        const changeCat = () => {
+
+            console.log(text2);
+            url = "../../images/cat.jpg"
+            text2.innerHTML = `
+                <img src="${url}" alt="고양이사진">
+            `;
+        }
+        const selectCat = () => {
+            selectedCat = document.getElementById('cats').value;
+            url = cats.find(cat => cat.no === selectedCat).url;
+            text2.innerHTML = `
+                <img src="${url}" alt="고양이사진">
+            `;
+        }
+    </script>
 </body>
 
 </html>

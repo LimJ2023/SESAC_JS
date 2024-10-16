@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>화면 리프래쉬 하기</h1>
+
+
+    <script>
+        window.onload = function () {
+            setTimeout(function () {
+                console.log("3초 후 출력됨");
+                location.reload(); //브라우저 주소창을 통한 리프레쉬(브라우저 캐시의 내용으로 불러옴)
+                location.reload(true) // 외부서버로부터 다시 로드.
+                location = locatino; // 이것도 1번이랑 같은 방법.
+                location.href = location.href; // 1번이랑 같은 방법.
+            }, 3000)
+        }
+    </script>
+</body>
+
+</html>

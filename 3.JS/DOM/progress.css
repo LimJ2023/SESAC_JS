@@ -1,0 +1,29 @@
+#progress {
+  width: 100%;
+  background-color: aliceblue;
+}
+
+#progressBar {
+  width: 0%;
+  height: 30px;
+  background-color: chartreuse;
+  animation: fill 0s linear 0s;
+  animation-play-state: paused;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fill {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+#per {
+  display: none;
+}
