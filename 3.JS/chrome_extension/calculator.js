@@ -39,10 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
           //더 좋은 방법이 떠오름. 결과값에 무한대가 있으면 무조건 문제가 있는걸로 변경
           // 결과가 1캐릭터 일때는 슬라이스가 문제가 생기니까 조건 하나 추가..
           // 결과값이 0일때 또 문제가 있어서 조건 추가
-          if (
-            "Infinity".includes(result.slice(1, -1)) &&
-            !(result.length <= 1)
-          ) {
+          if ("Infinity".includes(result)) {
             text.textContent = "0으로 나눌 수 없습니다.";
             console.log("0으로 나눌 수 없습니다.");
             result = " ";
