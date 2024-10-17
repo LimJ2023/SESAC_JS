@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .item {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+
+        #dragItem1 {
+
+            background-color: blueviolet;
+
+        }
+
+        #dragItem2 {
+
+            background-color: cadetblue;
+        }
+
+        #dragItem3 {
+
+            background-color: cornflowerblue;
+        }
+
+        #dropZone {
+            width: 200px;
+            height: 200px;
+            margin-top: 100px;
+            border: 2px solid wheat;
+            background-color: aliceblue;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dragItem1" class="item" draggable="true">Drag me1</div>
+    <div id="dragItem2" class="item" draggable="true">Drag me2</div>
+    <div id="dragItem3" class="item" draggable="true">Drag me3</div>
+    <div id="dropZone">Drop here</div>
+
+    <script>
+        const item1 = document.getElementById("dragItem1");
+        const item2 = document.getElementById("dragItem2");
+        const zone = document.getElementById("dropZone");
+        let grab;
+        item1.addEventListener("dragstart", (e) => {
+            console.log("드래그 시작");
+        });
+        //무언가 내 위에 있는가
+        zone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            console.log("무언가 위에 있습니다.")
+        })
+        zone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            console.log("드롭 발생");
+        })
+    </script>
+</body>
+
+</html>

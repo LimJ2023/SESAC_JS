@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #content {
+            height: 2000px;
+            background: linear-gradient(to bottom, #ffcc00 0%, #ff6600 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content"></div>
+    <script>
+        window.addEventListener("scroll", () => {
+            console.log("페이지 스크롤됨");
+
+            //여러가지 y위치 가져오는 방법.
+            // const scrollPosition = window.pageYOffset;
+            // console.log(`현재 위치 : ${scrollPosition}`);
+            const yPosition = document.documentElement.scrollTop;
+            //console.log(`현재 위치 : ${yPosition}`);
+
+            //이것도 좋네...
+            const scrollPosition3 = window.pageYOffset || document.documentElement.scrollTop;
+            //console.log(`현재 위치 : ${scrollPosition3}`);
+        })
+    </script>
+</body>
+
+</html>

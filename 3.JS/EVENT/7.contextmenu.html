@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #myElement {
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="myElement">right click</div>
+    <script>
+
+        document.getElementById('myElement').addEventListener("contextmenu", (e) => {
+            //기본동작을 하지 않도록 함.
+            e.preventDefault();
+            console.log("우클 중단!")
+        })
+    </script>
+</body>
+
+</html>

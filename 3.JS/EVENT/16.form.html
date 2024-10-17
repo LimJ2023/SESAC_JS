@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" id="myform">
+        <input id="name" type="text" name="name" placeholder="이름을 입...">
+        <button type="submit">제출</button>
+        <button type="reset">초기화</button>
+    </form>
+    <script>
+        document.getElementById("myform").addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("폼 제출 중지했음");
+        })
+        document.getElementById("myform").addEventListener("reset", (e) => {
+            e.preventDefault();
+            console.log("폼 초기화 중지했음");
+            const text = document.getElementById("name");
+            text.value = "지울 수 없다!"
+        })
+    </script>
+</body>
+
+</html>

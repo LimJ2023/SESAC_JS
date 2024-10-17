@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="myButton">클릭</button>
+    <script>
+        const btn = document.getElementById('myButton');
+        console.log(btn);
+        function clicked() {
+            console.log("버튼클릭함")
+        }
+        btn.addEventListener("click", () => {
+            console.log("버튼 클릭됨")
+        })
+
+        //캬 이거 멋있다
+        document.getElementById('myButton').addEventListener("click", () => {
+            console.log("버튼 클릭됨")
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" value="console.log('Hello, world')" id="myText">
+    <button id="copyBtn">코드복사</button>
+    <script>
+        document.getElementById('copyBtn').addEventListener("click", () => {
+            const copyText = document.getElementById("myText");
+
+            copyText.select();
+            document.execCommand("copy");
+            alert("클립보드에 복사되었습니다.");
+        })
+    </script>
+</body>
+
+</html>

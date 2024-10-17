@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="print">이 페이지를 출력하기</button>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <p>끼얏호우~~</p>
+    <script>
+        document.getElementById('print').addEventListener("click", () => {
+            window.print();
+        })
+        window.onbeforeprint = () => {
+            console.log("출력 전 이벤트")
+        }
+        window.onafterprint = () => {
+            console.log("출력 후 이벤트")
+        }
+    </script>
+</body>
+
+</html>

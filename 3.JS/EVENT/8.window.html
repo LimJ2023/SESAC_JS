@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="resize">창 크기 변경</button>
+    <script>
+        window.addEventListener("resize", () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            console.log(`내 창 크기는 ${width},${height}`)
+        })
+        document.getElementById('resize').addEventListener("click", () => {
+            console.log("새 창 띄우고 크기 변경");
+            // 기본 창의 크기 변경은 사용자 보호 차원으로 막힌 상태.
+            // window.resi(800, 600);
+            const popup = window.open('', '팝업윈도우', 'width-100,height-100');
+            popup.resizeTo(800, 600);
+        })
+    </script>
+</body>
+
+</html>

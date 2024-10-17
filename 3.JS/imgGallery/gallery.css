@@ -1,0 +1,20 @@
+.imgbox {
+  width: 100px;
+}
+img {
+  width: 100%;
+}
+#main {
+  width: 500px;
+  margin: 100px auto;
+}
+#imgcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+#imgcontainer img {
+  cursor: pointer;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+
+        // window.onload = function(){}
+        window.onload = () => {
+            console.log("모든 리소스가 다 로딩되고 진입.#1");
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DOM이 완전히 로드된 다음 진입 #2");
+        })
+    </script>
+</body>
+
+</html>

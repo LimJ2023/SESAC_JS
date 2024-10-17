@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .item {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+
+        }
+
+        #dragItem1 {
+            background-color: blueviolet;
+
+        }
+
+        #dragItem2 {
+
+            background-color: cadetblue;
+        }
+
+        #dragItem3 {
+
+            background-color: brown;
+        }
+
+        #dragItem4 {
+
+            background-color: dimgray;
+        }
+
+        #dropZone {
+            width: 200px;
+            min-height: 200px;
+            margin-top: 100px;
+            border: 2px solid wheat;
+            background-color: aliceblue;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dragItem1" class="item" draggable="true">Drag me1</div>
+    <div id="dragItem2" class="item" draggable="true">Drag me2</div>
+    <div id="dragItem3" class="item" draggable="true">Drag me3</div>
+    <div id="dragItem4" class="item" draggable="true">Drag me4</div>
+    <div id="dropZone">Drop here</div>
+
+    <script>
+
+        const items = document.getElementsByClassName('item');
+        const items2 = document.querySelector(".item");
+        const zone = document.getElementById("dropZone");
+
+        const addEvnet = (item) => {
+            item.addEventListener("dragstart", (e) => {
+                event.dataTransfer.setData("target", e.target.id);
+                console.log(event.dataTransfer.getData("target"));
+            });
+        }
+
+        for (item of items) {
+            addEvnet(item);
+        }
+
+        zone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        })
+
+
+        zone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            const obj = document.getElementById(event.dataTransfer.getData("target"));
+            zone.appendChild(obj);
+            zone.style.height = 200 + obj.clientHeight * zone.childElementCount + "px";
+        })
+        zone.addEventListener("dragleave", (e) => {
+            e.preventDefault();
+            const obj = document.getElementById(event.dataTransfer.getData("target"));
+            zone.Node.removeChild(obj);
+            zone.style.height = obj.clientHeight * zone.childElementCount + "px";
+        })
+
+        //나가도록은 못하나?
+        // document.body~에 넣었더니 zone을 덮어씌워버림...
+        //
+    </script>
+</body>
+
+</html>

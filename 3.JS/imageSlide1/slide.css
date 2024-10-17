@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+.imgbox {
+  width: 300px;
+  position: relative;
+  margin: 0 100px;
+}
+img {
+  width: 100%;
+}
+
+main {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  width: 100px;
+  height: 50px;
+  margin: 10px;
+  position: absolute;
+}
+#prev {
+  top: 50%;
+  right: 90%;
+}
+#next {
+  top: 50%;
+  left: 90%;
+}

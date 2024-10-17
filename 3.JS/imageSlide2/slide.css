@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+}
+
+.image {
+  width: 600px;
+  position: relative;
+  margin: 0 300px;
+}
+main {
+  display: flex;
+  justify-content: center;
+}
+#card {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  width: 700px;
+  height: 600px;
+  overflow: hidden;
+}
+#imgcontainer {
+  position: relative;
+  width: 10000px;
+  height: 800px;
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  right: 200px;
+}
+button {
+  width: 100px;
+  height: 50px;
+  margin: 10px;
+  position: absolute;
+}
+#prev {
+  display: none;
+  top: 50%;
+  right: 90%;
+}
+#next {
+  top: 50%;
+  left: 90%;
+}

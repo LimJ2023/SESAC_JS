@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #displayKey {
+            text-align: center;
+            font-size: 40px;
+            margin-top: 50px;
+            color: coral;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="myinput" placeholder="글자를 입력하시오">
+    <div id="displayKey">
+        <!-- 눌린 키를 표시하기 -->
+    </div>
+    <script>
+
+        //포커스상태
+        document.getElementById("myinput").addEventListener("focus", () => {
+            console.log("입력창이 포커스 상태입니다.");
+        })
+        //포커스 상태 해제
+        document.getElementById("myinput").addEventListener("blur", () => {
+            console.log("입력창이 포커스 해제 되었습니다.");
+        })
+        //포커스 change
+        document.getElementById("myinput").addEventListener("change", () => {
+            console.log("입력창이 바뀌었습니다.");
+        })
+    </script>
+</body>
+
+</html>
