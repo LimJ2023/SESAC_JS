@@ -1,8 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-top: 100px;
+  text-align: center;
+  background-color: whitesmoke;
+  width: 100%;
+}
+
 ul li {
   list-style-type: none;
   border: 2px solid black;
   width: 400px;
-  height: 50px;
+  min-width: 400px;
+  height: 60px;
   border-radius: 24px;
   background-color: antiquewhite;
   box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.8);
@@ -13,8 +25,9 @@ ul li {
   padding: 5px;
 }
 #todoInput {
-  width: 300px;
-  height: 40px;
+  min-width: 700px;
+  width: 70%;
+  height: 50px;
   padding: 5px;
   font-size: 16px;
   border-radius: 10px;
@@ -24,12 +37,13 @@ ul li {
   background-color: rgba(76, 153, 76, 0.978);
 }
 #addButton:hover {
-  background-color: rgb(92, 215, 92);
+  background-color: rgb(97, 196, 97);
 }
 
 button {
+  position: relative;
   color: white;
-  width: 100px;
+  width: 120px;
   height: 60px;
   border-radius: 24px;
   font-size: 18px;
@@ -38,8 +52,17 @@ button {
   box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.8);
 }
 .delButton {
+  width: 100px;
   background-color: rgb(191, 20, 20);
+  left: 8rem;
 }
 .delButton:hover {
+  background-color: rgb(233, 76, 76);
+}
+
+#delAllButton {
+  background-color: crimson;
+}
+#delAllButton:hover {
   background-color: rgb(233, 76, 76);
 }
