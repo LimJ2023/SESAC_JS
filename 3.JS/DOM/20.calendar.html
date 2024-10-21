@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .calculator input {
+            grid-column: span 4;
+            padding: 10px;
+        }
+
+        .calculator button {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <input type="text" id="result" readonly>
+        <button onclick="appendSymbol(this.innerText)">+</button>
+        <button onclick="appendSymbol(this.innerText)">-</button>
+        <button onclick="appendSymbol(this.innerText)">*</button>
+        <button onclick="appendSymbol(this.innerText)">/</button>
+        <button onclick="document.getElementById('result').value += this.innerText">7</button>
+        <button onclick="document.getElementById('result').value += this.innerText">8</button>
+        <button onclick="document.getElementById('result').value += this.innerText">9</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="document.getElementById('result').value += this.innerText">4</button>
+        <button onclick="document.getElementById('result').value += this.innerText">5</button>
+        <button onclick="document.getElementById('result').value += this.innerText">6</button>
+        <button onclick="clearResult()">C</button>
+        <button onclick="document.getElementById('result').value += this.innerText">1</button>
+        <button onclick="document.getElementById('result').value += this.innerText">2</button>
+        <button onclick="document.getElementById('result').value += this.innerText">3</button>
+        <button onclick="document.getElementById('result').value += this.innerText">0</button>
+
+    </div>
+
+    <script>
+
+
+        function clearResult() {
+            document.getElementById('result').value = "";
+        }
+        function calculate() {
+            const resultDOM = document.getElementById('result');
+            let lastInput = resultDOM.value[resultDOM.value.length - 1];
+            document.getElementById('result').value = eval(document.getElementById('result').value);
+        }
+
+        function appendSymbol(symbol) {
+            let resultDOM = document.getElementById('result');
+            let result = resultDOM.value;
+            let lastInput = resultDOM.value[resultDOM.value.length - 1];
+
+            if (isSymbol(lastInput)) {
+                // resultDOM.value += symbol;
+                resultDOM.value = result.slice(0, -1) + symbol;
+            } else {
+                resultDOM.value += symbol;
+            }
+            // if ("+-*/".includes(result[result.length - 1])) {
+            //     result = result.slice(0, -1) + symbol;
+            //     resultDOM.value = result;
+            // }
+            // else {
+            //     result += symbol;
+            //     console.log("최종결과", result)
+            //     resultDOM.value = result;
+            // }
+        }
+        function isSymbol(value) {
+            return ['+', '-', '*', '/'].includes(value);
+        }
+    </script>
+</body>
+
+</html>
