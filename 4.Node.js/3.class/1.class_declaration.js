@@ -1,13 +1,13 @@
-class Car {
-  constructor(make, model) {
-    this.make = make;
-    this.model = model;
-  }
+// class Car {
+//   constructor(make, model) {
+//     this.make = make;
+//     this.model = model;
+//   }
 
-  drive2() {
-    return `${this.make}의 ${this.model} 이 움직이는 중입니다.`;
-  }
-}
+//   drive2() {
+//     return `${this.make}의 ${this.model} 이 움직이는 중입니다.`;
+//   }
+// }
 
 class Car {
   constructor(make, model) {
@@ -27,6 +27,8 @@ class Car {
 }
 
 const myCar = new Car("현대", "g80");
-console.log(myCar.drive2());
+const myCar2 = new Car("기아차", "모닝");
+console.log(myCar.drive());
+console.log(myCar2.drive());
 // console.log(myCar.open());
 // console.log(myCar.close());
