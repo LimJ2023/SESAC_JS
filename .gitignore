@@ -3,3 +3,6 @@ node_modules/
 
 # 개발하면서 생긴 각종 중간 txt파일들 제외
 *.txt
+
+# 특정만 예외 처리 빼기
+!example.txt
