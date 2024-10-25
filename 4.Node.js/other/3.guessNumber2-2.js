@@ -17,8 +17,10 @@ async function numberGame() {
   while (true) {
     const answer = await rl.question("1부터 100 사이의 숫자를 맞혀보세요. : ");
     count++;
-
-    if (answer == rand) {
+    const inputNum = Number(answer);
+    if (isNaN(inputNum)) {
+      console.log("올바른 숫자를 입력해주세요");
+    } else if (answer == rand) {
       console.log("정답입니다!");
       console.log(`${count}번째에 맞혔습니다!`);
       break;
