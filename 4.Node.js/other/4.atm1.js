@@ -5,7 +5,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-//이걸 통해서 사용자로부터 입출력이 가능
+//재귀함수 이용해 만든 atm
 
 let balance = 10000;
 

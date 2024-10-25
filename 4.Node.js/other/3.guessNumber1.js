@@ -7,17 +7,18 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-//랜덤 숫자 생성
+//재귀함수 이용한 숫자 맞히기 게임
+
 const rand = Math.floor(Math.random() * 100 + 1);
-function questions(rand) {
+function questions() {
   rl.question("1부터 100 사이의 숫자를 맞혀보세요. : ", (input) => {
     //입력받은 숫자와 비교
     if (input > rand) {
       console.log("더 작은 숫자입니다.");
-      questions(rand);
+      questions();
     } else if (input < rand) {
       console.log("더 큰 숫자입니다.");
-      questions(rand);
+      questions();
     } else if (input == rand) {
       console.log("정답입니다!");
       rl.close();
@@ -25,4 +26,4 @@ function questions(rand) {
     }
   });
 }
-questions(rand);
+questions();

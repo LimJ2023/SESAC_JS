@@ -7,7 +7,8 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-//랜덤 숫자 생성
+//재귀함수 이용한 숫자 맞히기 게임
+
 const rand = Math.floor(Math.random() * 100 + 1);
 let count = 0;
 function questions(rand) {
