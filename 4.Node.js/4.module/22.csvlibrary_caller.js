@@ -8,11 +8,11 @@ const sampleData = [
   ["이영희", "28", "기획자"],
 ];
 
-// csvWrite(filePath, sampleData, (err) => {
-//   if (err) {
-//     console.log("파일 쓰기 실패", err.message);
-//   }
-// });
+csvWrite(filePath, sampleData, (err) => {
+  if (err) {
+    console.log("파일 쓰기 실패", err.message);
+  }
+});
 
 csvRead(filePath, (err, data) => {
   if (err) {
