@@ -56,7 +56,7 @@ for (let i = 0; i < 10; i++) {
 
 const userdb = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 10; i++) {
   userdb.push([
     generateName(),
     generateGender(),
@@ -70,14 +70,16 @@ for (const user of userdb) {
 
 //csv 형태로 파일에 저장하시오.
 
-const csvWriter = require("./csv");
-const filePath = "user.csv";
+function csvConverter() {
+  const csvWriter = require("./csv");
+  const filePath = "user.csv";
 
-csvWriter(filePath, userdb, (err) => {
-  if (err) {
-    console.log("파일 쓰기 실패", err.message);
-  }
-});
+  csvWriter(filePath, userdb, (err) => {
+    if (err) {
+      console.log("파일 쓰기 실패", err.message);
+    }
+  });
+}
 
 // =================== 여기서부터를 상점 =======================
 class NameGenerator {}
