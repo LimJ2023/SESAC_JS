@@ -1,5 +1,6 @@
 const CSVliibrary = require("./CSV");
 const util = require("./util");
+
 class NameGenerator {
   constructor() {
     this.names = [
@@ -21,7 +22,7 @@ class NameGenerator {
     ];
   }
   generateName() {
-    return this.names[Math.floor(Math.random() * this.names.length)];
+    return this.names[Math.floor(util.getRandByLen(this.names))];
   }
 }
 
@@ -43,6 +44,7 @@ class BirthdateGenerator {
     const day = util.plusZero(util.getRandomInRange(1, 30));
     // return new Date(year, month, day);
     //01,02 등은 어떻게 만들어놓을까?
+    //유틸에 아에 0을 붙여주는 함수를 만들기로 함
 
     return `${year}-${month}-${day}`;
   }
@@ -66,6 +68,8 @@ class AddressGenerator {
     );
   }
 }
+
+//uuid 생성 이건 쉽고
 class IdGenerator {
   constructor() {
     this.uuidv4 = require("uuid");
@@ -88,6 +92,8 @@ class TypeGenerator {
     return this.type[util.getRandByLen(this.type)];
   }
 }
+
+//대충 1호점~10호점 중에 아무거나 나오도록
 class storeNameGennerator {
   constructor() {
     this.space = ["홍대", "송파", "잠실", "강서", "신촌"];
@@ -117,6 +123,7 @@ class StoreGenerator {
       const type = this.type.getType();
       const name = this.name.getStoreName();
       const address = this.address.generateAddress();
+      //푸시할 때 []배열 안에 id,type,name을 넣는 것에 주의
       data.push([id, type, name, address]);
     }
     return data;
@@ -147,12 +154,13 @@ class UserGenerator {
   }
 }
 
+//중간중간 확인용 프린터
 class DataPrinter {
   constructor(data) {
     this.data = data;
   }
   printUserData() {
-    //이거 for문 돌리는 문법이 재밌음
+    //이거 for문 돌리는 문법이 재밌음 <--순서 틀리면 이상하게 나옴
     for (const [id, name, gen, age, bir] of this.data) {
       console.log(
         `id: ${id} 이름: ${name}, 성별: ${gen}, 나이: ${age} 생년월일: ${bir}`
@@ -175,6 +183,7 @@ class DataPrinter {
 }
 class RandDateGenerator {
   getRandDate() {
+    //plusZero() <-- 한 자리 숫자는 01,02 이런식으로 앞에 0 붙여주도록 해줌
     const month = util.plusZero(util.getRandomInRange(1, 12));
     const day = util.plusZero(util.getRandomInRange(1, 30));
     const hour = util.plusZero(util.getRandomInRange(1, 24));
@@ -200,7 +209,7 @@ class OrderGenerator {
     const storeData = await csv.csvParse(filePath + "store.csv");
     const userData = await csv.csvParse(filePath + "user.csv");
 
-    //store.Id <-- id인지 Id인지 헤드를 잘 봐야함..이걸로 고생
+    //store.Id <-- id인지 Id인지 csv에 설정된 헤드를 잘 봐야함...이걸로 고생
     this.store_ids = storeData.map((store) => store.Id);
     this.user_ids = userData.map((user) => user.Id);
 
@@ -232,10 +241,13 @@ class OrderItemGenerator {
     const order_ids = orders.map((order) => order.Id);
     const item_ids = items.map((item) => item.Id);
 
+    //약간 헷갈리는게 id는 하나인데 주문이 여러종류일 때를 어떻게 구현하는가?
+    // id에 for문을 돌리지 말고 나중에 돌려야하나?
+    // 30% 확률로 원래 있던 id에 주문을 추가하는 방식 고민...
+    // 그냥 집어넣어도 상관없나?
     for (let i = 0; i < count; i++) {
       const id = this.id.getUuid();
       const order_id = order_ids[util.getRandByLen(order_ids)];
-      // const order_id = order_ids[Math.floor(Math.random() * order_ids)];
       const item_id = item_ids[util.getRandByLen(item_ids)];
 
       data.push([id, order_id, item_id]);
@@ -248,12 +260,14 @@ class OrderItemGenerator {
 //타입이 먼저고 이름이 나중에 오게 할까?
 class ItemTypeAndNameGenerator {
   constructor() {
+    //타입별로 배열을 분리함
     this.type = ["Coffe", "Cake", "Juice"];
     this.coffes = ["Americano Coffe", "Espresso Coffe"];
     this.cakes = ["Strawberry Cake", "Vanilla Cake", "Red Velvet Cake"];
     this.juices = ["Watermelon Juice", "Lemon Juice"];
   }
   generateItemName() {
+    //타입을 정한뒤 나온 타입에 따라 제품명이 다르게 나오도록..
     const typeandname = {};
     const types = this.type[util.getRandByLen(this.type)];
     switch (types) {
@@ -280,7 +294,7 @@ class itemPrice {
   constructor() {
     this.price = 0;
   }
-
+  // 500원 단위로 가격조절됨, 최소가격 2000원?
   getUnitPrice(base, unit) {
     return Math.floor(Math.random() * 9 + 1) * unit + base;
   }
@@ -303,7 +317,7 @@ class ItemGenerator {
       const name = typeandname.name;
       const type = typeandname.type;
       const price = this.unitPrice.getUnitPrice(2000, 500);
-      //배열 안에 들어가게 하는 것에 주의. 그냥 집어넣지 말고
+      //[] 배열 안에 들어가게 하는 것에 주의. 그냥 집어넣지 말고
       data.push([id, name, type, price]);
     }
     console.log(data);
@@ -346,6 +360,8 @@ async function orders(filePath) {
   csv.csvWrite(filePath + "order.csv", orders, orderHead);
 }
 
+//아이템 갯수가 여기도 있고 다른 곳에도 있어서 하나의 함수로 묶어서 관리할까 생각중...
+//대충 generateAll한다음 100,1000,10000,50000 이런식으로
 async function orderItems(filePath) {
   const orderItems = await orderItemGenerator.generateOrderItem(
     filePath,
@@ -353,6 +369,8 @@ async function orderItems(filePath) {
   );
   csv.csvWrite(filePath + "orderitem.csv", orderItems, orderItemHead);
 }
+
+//생성시키기
 orderItems(filePath);
 // orders(filePath);
 // csv.csvWrite(filePath + "item.csv", items, itemHead);
