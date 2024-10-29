@@ -1,5 +1,5 @@
 const CSVliibrary = require("./CSV");
-
+const util = require("./util");
 class NameGenerator {
   constructor() {
     this.names = [
@@ -13,6 +13,11 @@ class NameGenerator {
       "이지유",
       "조수아",
       "이지아",
+      "강준영",
+      "장승현",
+      "장은지",
+      "조하은",
+      "윤예진",
     ];
   }
   generateName() {
@@ -26,25 +31,16 @@ class GenderGenerator {
   }
 }
 
-class MyUtility {
-  static getRandomInRange(min, max) {
-    return Math.abs(Math.floor(Math.random() * (max - min + 1)) + min);
-  }
-  static plusZero(number) {
-    if (number < 10) {
-      return "0" + String(number);
-    } else return String(number);
-  }
-}
 class BirthdateGenerator {
   generateBirthdate() {
     //yyyy-mm-dd 포맷으로 반환
     //1960 - 2010
-    const year = MyUtility.getRandomInRange(1960, 2010);
+
+    const year = util.getRandomInRange(1960, 2010);
     // const month = Math.floor(Math.random() * 12);
-    // const month = MyUtility.plusZero(Math.floor(Math.random() * 12) + 1);
-    const month = MyUtility.plusZero(MyUtility.getRandomInRange(1, 12));
-    const day = MyUtility.plusZero(MyUtility.getRandomInRange(1, 30));
+    // const month = util.plusZero(Math.floor(Math.random() * 12) + 1);
+    const month = util.plusZero(util.getRandomInRange(1, 12));
+    const day = util.plusZero(util.getRandomInRange(1, 30));
     // return new Date(year, month, day);
     //01,02 등은 어떻게 만들어놓을까?
 
@@ -89,7 +85,7 @@ class TypeGenerator {
     this.type = ["스타벅스", "이디야", "커피빈", "투썸"];
   }
   getType() {
-    return this.type[Math.floor(Math.random() * this.type.length)];
+    return this.type[util.getRandByLen(this.type)];
   }
 }
 class storeNameGennerator {
@@ -99,9 +95,9 @@ class storeNameGennerator {
   }
   getStoreName() {
     return (
-      this.space[Math.floor(Math.random() * this.space.length)] +
+      this.space[util.getRandByLen(this.space)] +
       " " +
-      MyUtility.getRandomInRange(1, this.number) +
+      util.getRandomInRange(1, this.number) +
       "호점"
     );
   }
@@ -179,11 +175,11 @@ class DataPrinter {
 }
 class RandDateGenerator {
   getRandDate() {
-    const month = MyUtility.plusZero(MyUtility.getRandomInRange(1, 12));
-    const day = MyUtility.plusZero(MyUtility.getRandomInRange(1, 30));
-    const hour = MyUtility.plusZero(MyUtility.getRandomInRange(1, 24));
-    const minute = MyUtility.plusZero(MyUtility.getRandomInRange(1, 60));
-    const second = MyUtility.plusZero(MyUtility.getRandomInRange(1, 60));
+    const month = util.plusZero(util.getRandomInRange(1, 12));
+    const day = util.plusZero(util.getRandomInRange(1, 30));
+    const hour = util.plusZero(util.getRandomInRange(1, 24));
+    const minute = util.plusZero(util.getRandomInRange(1, 60));
+    const second = util.plusZero(util.getRandomInRange(1, 60));
 
     return `2023-${month}-${day} ${hour}:${minute}:${second}`;
   }
@@ -197,7 +193,7 @@ class OrderGenerator {
     this.user_ids = [];
   }
 
-  async getOrderData(filePath, count) {
+  async generateOrderData(filePath, count) {
     const data = [];
 
     //비동기 선언 후 await으로 write가 데이터를 읽을 때까지 기다리게 했음
@@ -211,56 +207,154 @@ class OrderGenerator {
     for (let i = 0; i < count; i++) {
       const id = this.id.getUuid();
       const ordered_at = this.ordered_at.getRandDate();
-      data.push([
-        id,
-        ordered_at,
-        this.store_ids[Math.floor(Math.random() * this.store_ids.length)],
-        this.user_ids[Math.floor(Math.random() * this.user_ids.length)],
-      ]);
+      const store_id = this.store_ids[util.getRandByLen(this.store_ids)];
+      const user_id = this.user_ids[util.getRandByLen(this.user_ids)];
+      data.push([id, ordered_at, store_id, user_id]);
     }
     return data;
   }
 }
-class ItemGenerator {
+//오더 id와 생성된 아이템을 기반으로 <- 아이템도 id값만 가져오면 되나?
+class OrderItemGenerator {
   constructor() {
-    this.id = IdGenerator();
-    this.name = [];
-    this.Type = [];
-    this.unitPrice = 0;
+    this.id = new IdGenerator();
+    this.csv = new CSVliibrary();
+    this.item = [];
+    this.orderId = "";
+  }
+
+  async generateOrderItem(filePath, count) {
+    const data = [];
+
+    const orders = await csv.csvParse(filePath + "order.csv");
+    const items = await csv.csvParse(filePath + "item.csv");
+
+    const order_ids = orders.map((order) => order.Id);
+    const item_ids = items.map((item) => item.Id);
+
+    for (let i = 0; i < count; i++) {
+      const id = this.id.getUuid();
+      const order_id = order_ids[util.getRandByLen(order_ids)];
+      // const order_id = order_ids[Math.floor(Math.random() * order_ids)];
+      const item_id = item_ids[util.getRandByLen(item_ids)];
+
+      data.push([id, order_id, item_id]);
+    }
+    return data;
   }
 }
 
+//어떻게 이름과 타입을 매칭시킬까?
+//타입이 먼저고 이름이 나중에 오게 할까?
+class ItemTypeAndNameGenerator {
+  constructor() {
+    this.type = ["Coffe", "Cake", "Juice"];
+    this.coffes = ["Americano Coffe", "Espresso Coffe"];
+    this.cakes = ["Strawberry Cake", "Vanilla Cake", "Red Velvet Cake"];
+    this.juices = ["Watermelon Juice", "Lemon Juice"];
+  }
+  generateItemName() {
+    const typeandname = {};
+    const types = this.type[util.getRandByLen(this.type)];
+    switch (types) {
+      case "Coffe":
+        typeandname.type = "Coffe";
+        typeandname.name = this.coffes[util.getRandByLen(this.coffes)];
+        break;
+      case "Cake":
+        typeandname.type = "Cake";
+        typeandname.name = this.cakes[util.getRandByLen(this.cakes)];
+        break;
+      case "Juice":
+        typeandname.type = "Juice";
+        typeandname.name = this.juices[util.getRandByLen(this.juices)];
+        break;
+      default:
+        console.log("잘못된 메뉴 선택됨 ");
+        break;
+    }
+    return typeandname;
+  }
+}
+class itemPrice {
+  constructor() {
+    this.price = 0;
+  }
+
+  getUnitPrice(base, unit) {
+    return Math.floor(Math.random() * 9 + 1) * unit + base;
+  }
+}
+class ItemGenerator {
+  constructor() {
+    this.id = new IdGenerator();
+    this.typeandname = new ItemTypeAndNameGenerator();
+    this.unitPrice = new itemPrice();
+    this.name = [];
+    this.Type = [];
+  }
+
+  generateItemData(count) {
+    const data = [];
+    for (let i = 0; i < count; i++) {
+      const id = this.id.getUuid();
+      //더 좋은 구조는 없을까? 타입이랑 이름을 같이 불러오는게 정말 맞나?
+      const typeandname = this.typeandname.generateItemName();
+      const name = typeandname.name;
+      const type = typeandname.type;
+      const price = this.unitPrice.getUnitPrice(2000, 500);
+      //배열 안에 들어가게 하는 것에 주의. 그냥 집어넣지 말고
+      data.push([id, name, type, price]);
+    }
+    console.log(data);
+    return data;
+  }
+}
+
+//========================여기서부터 사용=================================================
+
+//헤드부분을 어딘가에 합치던가 해야할듯(아마 제네레이터 부분에)
+const orderItemHead = ["Id", "OrderId", "ItemId"];
 const itemHead = ["Id", "Name", "Type", "UnitPrice"];
 const orderHead = ["Id", "OrdereAt", "StoreId", "UserId"];
 const usersHead = ["Id", "Name", "Gender", "Age", "Birthdate", "Address"];
 const storeHead = ["Id", "Type", "Name", "Address"];
+//초기화
 const userGenerator = new UserGenerator();
 const storeGenerator = new StoreGenerator();
 const orderGenerator = new OrderGenerator();
+const itemGenerator = new ItemGenerator();
+const orderItemGenerator = new OrderItemGenerator();
+
+//함수 호출(몇 개인지 카운트)
 const users = userGenerator.generateUserData(1000);
 const stores = storeGenerator.generateStoreData(100);
+const items = itemGenerator.generateItemData(20);
 
-const filePath = "./csv/";
-const csv = new CSVliibrary();
-
-// async function orderDatas() {
-//   const orders = await orderGenerator.getOrderData();
-//   console.log(orders);
-// }
-// orderDatas();
-// const orderGenerator = new OrderGenerator();
-// const orders = orderGenerator.getOrderData(
-//   stores[Math.random() * stores.length],
-//   users[Math.random() * users.length]
-// );
 // const dataPrinter = new DataPrinter(stores);
 // dataPrinter.printOrderData();
 
+// ===================쓰기 부분. ========================================================
+
+//저장,불러올 파일 경로.(절대경로 해도 됨)
+const filePath = "./csv/";
+const csv = new CSVliibrary();
+
+//오더는 다른 데이터를 읽어오고 쓰니까 비동기 함수로 구현
 async function orders(filePath) {
-  const orders = await orderGenerator.getOrderData(filePath, 10000);
+  const orders = await orderGenerator.generateOrderData(filePath, 10000);
   csv.csvWrite(filePath + "order.csv", orders, orderHead);
 }
-orders(filePath);
 
+async function orderItems(filePath) {
+  const orderItems = await orderItemGenerator.generateOrderItem(
+    filePath,
+    50000
+  );
+  csv.csvWrite(filePath + "orderitem.csv", orderItems, orderItemHead);
+}
+orderItems(filePath);
+// orders(filePath);
+// csv.csvWrite(filePath + "item.csv", items, itemHead);
 // csv.csvWrite(filePath + "store.csv", stores, storeHead);
 // csv.csvWrite(filePath + "user.csv", users, usersHead);

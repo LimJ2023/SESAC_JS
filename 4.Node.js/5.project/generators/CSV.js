@@ -51,7 +51,7 @@ class CSVliibrary {
         .pipe(this.csv_parser())
         .on("data", (data) => results.push(data)) // 스트림으로 읽으면서 처리
         .on("end", () => {
-          //   console.log("읽기 완료", results); //읽기가 끝났을 때의 처리.
+          console.log("csvParse 완료"); //읽기가 끝났을 때의 처리.
           resolve(results);
         })
         .on("error", (error) => {
