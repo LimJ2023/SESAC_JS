@@ -1,3 +1,5 @@
+const IdGen = require("./IdGen");
+const util = require("./util");
 class TypeGenerator {
   constructor() {
     this.type = ["스타벅스", "이디야", "커피빈", "투썸"];
@@ -6,7 +8,6 @@ class TypeGenerator {
     return this.type[util.getRandByLen(this.type)];
   }
 }
-//대충 1호점~10호점 중에 아무거나 나오도록
 class storeNameGennerator {
   constructor() {
     this.space = ["홍대", "송파", "잠실", "강서", "신촌"];
@@ -23,7 +24,7 @@ class storeNameGennerator {
 }
 class StoreGenerator {
   constructor() {
-    this.idGen = require("./IdGen");
+    this.idGen = new IdGen();
     this.types = new TypeGenerator();
     this.names = new storeNameGennerator();
     this.addressGen = require("./AddressGen");
@@ -43,3 +44,4 @@ class StoreGenerator {
     return data;
   }
 }
+module.exports = StoreGenerator;

@@ -161,6 +161,8 @@ class DataPrinter {
   }
   printUserData() {
     //이거 for문 돌리는 문법이 재밌음 <--순서 틀리면 이상하게 나옴
+    const header = this.data.slice(0, 1);
+    console.log("프린터에서 추출한 헤더 ", header);
     for (const [id, name, gen, age, bir] of this.data) {
       console.log(
         `id: ${id} 이름: ${name}, 성별: ${gen}, 나이: ${age} 생년월일: ${bir}`
@@ -320,7 +322,7 @@ class ItemGenerator {
       //[] 배열 안에 들어가게 하는 것에 주의. 그냥 집어넣지 말고
       data.push([id, name, type, price]);
     }
-    console.log(data);
+    // console.log(data);
     return data;
   }
 }
@@ -341,12 +343,12 @@ const itemGenerator = new ItemGenerator();
 const orderItemGenerator = new OrderItemGenerator();
 
 //함수 호출(몇 개인지 카운트)
-const users = userGenerator.generateUserData(1000);
+const users = userGenerator.generateUserData(10);
 const stores = storeGenerator.generateStoreData(100);
-const items = itemGenerator.generateItemData(20);
+// const items = itemGenerator.generateItemData(20);
 
-// const dataPrinter = new DataPrinter(stores);
-// dataPrinter.printOrderData();
+const dataPrinter = new DataPrinter(users);
+dataPrinter.printUserData();
 
 // ===================쓰기 부분. ========================================================
 
@@ -371,8 +373,8 @@ async function orderItems(filePath) {
 }
 
 //생성시키기
-orderItems(filePath);
-// orders(filePath);
 // csv.csvWrite(filePath + "item.csv", items, itemHead);
 // csv.csvWrite(filePath + "store.csv", stores, storeHead);
 // csv.csvWrite(filePath + "user.csv", users, usersHead);
+// orders(filePath);
+// orderItems(filePath);

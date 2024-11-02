@@ -4,7 +4,6 @@ class AddressGenerator {
     this.dong = ["강남구", "부평구", "강서구", "남구", "중구"];
   }
   generateAddress() {
-    //1~100까지 번지수를 붙인 주소 생성
     return (
       this.cities[Math.floor(Math.random() * this.cities.length)] +
       " " +

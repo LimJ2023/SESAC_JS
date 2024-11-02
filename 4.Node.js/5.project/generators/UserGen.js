@@ -1,5 +1,5 @@
 const util = require("./util");
-
+const IdGen = require("./IdGen");
 class NameGenerator {
   constructor() {
     this.names = [
@@ -52,7 +52,7 @@ class AgeGenerator {
 
 class UserGenerator {
   constructor() {
-    this.idGen = require("./IdGen");
+    this.idGen = new IdGen();
     this.nameGen = new NameGenerator();
     this.ageGen = new AgeGenerator();
     this.birthGen = new BirthdateGenerator();
@@ -76,3 +76,4 @@ class UserGenerator {
     return data;
   }
 }
+module.exports = UserGenerator;

@@ -53,6 +53,7 @@ class CSVliibrary {
         .on("end", () => {
           console.log("csvParse 완료"); //읽기가 끝났을 때의 처리.
           resolve(results);
+          // return results;
         })
         .on("error", (error) => {
           rejects(error);

@@ -3,7 +3,7 @@ class IdGenerator {
   constructor() {
     this.uuidv4 = require("uuid");
   }
-  static getUuid() {
+  getUuid() {
     return this.uuidv4.v4();
   }
 }
