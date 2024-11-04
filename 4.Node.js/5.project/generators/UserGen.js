@@ -21,7 +21,7 @@ class NameGenerator {
     ];
   }
   generateName() {
-    return this.names[Math.floor(util.getRandByLen(this.names))];
+    return this.names[util.getRandByLen(this.names)];
   }
 }
 class GenderGenerator {
@@ -61,7 +61,7 @@ class UserGenerator {
   }
 
   generateUserData(count) {
-    //클래스 호출과 객체 호출의 차이
+    //클래스 호출과 객체 호출의 차이 <- addressGen안의 함수를 직접 가져오느냐 클래스를 가져와서 초기화 시키느냐 차이
     const addrGen = new this.addressGen();
     const data = [];
     for (let i = 0; i < count; i++) {

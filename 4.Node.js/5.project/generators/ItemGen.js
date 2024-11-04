@@ -1,5 +1,7 @@
 const util = require("./util");
 const IdGen = require("./IdGen");
+//어떻게 이름과 타입을 매칭시킬까?
+//타입이 먼저고 이름이 나중에 오게 할까?
 class ItemTypeAndNameGenerator {
   constructor() {
     this.type = ["Coffe", "Cake", "Juice"];
@@ -54,6 +56,7 @@ class ItemGenerator {
       const typeandname = this.typeandname.generateItemName();
       const name = typeandname.name;
       const type = typeandname.type;
+      //최소 2000원. 500원 단위로 랜덤.
       const price = this.unitPrice.getUnitPrice(2000, 500);
       data.push([id, name, type, price]);
     }

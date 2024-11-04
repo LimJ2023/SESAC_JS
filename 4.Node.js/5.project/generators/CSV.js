@@ -1,6 +1,3 @@
-const { rejects } = require("assert");
-const { resolve } = require("path");
-
 class CSVliibrary {
   constructor() {
     this.fs = require("fs");
@@ -30,7 +27,7 @@ class CSVliibrary {
         console.error("파일 쓰는도중 오류.", err.message);
         return;
       }
-      console.log("쓰기 완료");
+      console.log(filePath + " 쓰기 완료");
     });
   }
 
@@ -51,7 +48,7 @@ class CSVliibrary {
         .pipe(this.csv_parser())
         .on("data", (data) => results.push(data)) // 스트림으로 읽으면서 처리
         .on("end", () => {
-          console.log("csvParse 완료"); //읽기가 끝났을 때의 처리.
+          // console.log("csvParse 완료"); //읽기가 끝났을 때의 처리.
           resolve(results);
           // return results;
         })

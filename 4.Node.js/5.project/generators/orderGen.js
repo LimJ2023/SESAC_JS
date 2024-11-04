@@ -39,7 +39,7 @@ class RandDateGenerator {
     const minute = util.plusZero(util.getRandomInRange(1, 60));
     const second = util.plusZero(util.getRandomInRange(1, 60));
 
-    return `2023-${month}-${day} ${hour}:${minute}:${second}`;
+    return `2024-${month}-${day} ${hour}:${minute}:${second}`;
   }
 }
 

@@ -31,6 +31,7 @@ class StoreGenerator {
   }
 
   generateStoreData(count) {
+    //1~100까지 번지수를 붙인 주소 생성
     const addrGen = new this.addressGen();
     const data = [];
     for (let i = 0; i < count; i++) {
