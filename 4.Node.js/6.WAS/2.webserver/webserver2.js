@@ -70,10 +70,27 @@ http
           res.end("Not Found");
         }
       } else if (req.method === "PUT") {
-      } else if (req.method === "DELETE") {
+      }
+      // delete
+      else if (req.method === "DELETE") {
         if (req.url === "/user") {
-          users = [];
-          res.end("삭제 완료");
+          let body = "";
+          req.on("data", (data) => {
+            body += data;
+          });
+          req.on("end", () => {
+            const formData = parse(body);
+            if (users.includes(formData)) {
+              const filteredUsers = users.filter(
+                (user) => user.name !== formData.name
+              );
+              console.log("필터링 된 유저목록 : ", filteredUsers);
+              users = filteredUsers;
+              res.end(formData.name + "유저 삭제 완료");
+            } else {
+              res.end(formData.name + "이름의 유저는 존재하지 않습니다.");
+            }
+          });
         }
       } else {
         res.writeHead(404);
@@ -84,7 +101,9 @@ http
         "Content-Type": "text/html; charset=utf-8",
       });
       console.log("페이지 찾을 수 없음 : ", error.message);
-      res.end(`<h1>페이지 찾을 수 없음. 올바른 주소를 입력하세요 </h1>, ${error.message}`);
+      res.end(
+        `<h1>페이지 찾을 수 없음. 올바른 주소를 입력하세요 </h1>, ${error.message}`
+      );
     }
   })
   .listen(3000, () => {
