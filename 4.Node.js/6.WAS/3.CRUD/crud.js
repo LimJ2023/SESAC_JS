@@ -29,13 +29,11 @@ async function handleGetRequest(req, res) {
     if (req.url === "/") {
       const data = await fs.readFile("./index.html");
       res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      res.write(data);
-      res.end();
+      res.end(data);
     } else if (req.url === "/about") {
       const data = await fs.readFile("./about.html");
       res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-      res.write(data);
-      res.end();
+      res.end(data);
     } else if (req.url === "/user") {
       console.log(users);
       res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
@@ -51,14 +49,12 @@ async function handleGetRequest(req, res) {
       const imagePath = path.join("static/image/", imageName);
       const data = await fs.readFile(imagePath);
       res.writeHead(200, { "Content-Type": "image/jpg; charset=utf-8" });
-      res.write(data);
-      res.end();
-    } else if (req.url === "/user.js") {
-      const scriptPath = path.join("static" + path.basename(req.url));
-      const data = await fs.readFile(scriptPath);
+      res.end(data);
+    } else if (req.url.startsWith("/static")) {
+      const filePath = path.join(__dirname, req.url);
+      const data = await fs.readFile(filePath);
       res.writeHead(200, { "Content-Type": "text/javascript" });
-      res.write(data);
-      res.end();
+      res.end(data);
     } else {
       res.writeHead(404);
       res.end("Not Found");
@@ -80,22 +76,43 @@ function handlePOSTRequest(req, res) {
       } else if (req.headers["content-type"] === "application/json") {
         const parseData = JSON.parse(body);
         const user = {};
-        user.id = parseData.id;
-        user.name = parseData.name;
-        users.push(user);
         console.log(
-          "users : " + JSON.stringify(users) + " parse id: " + parseData.id
+          "유저중복확인 : ",
+          users.map((user) => user.id === parseData.id),
+          isUserContaions(parseData.id, users)
         );
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(user));
+        if (!isUserContaions(parseData.id, users)) {
+          user.id = parseData.id;
+          user.name = parseData.name;
+          users.push(user);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(user));
+        } else {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({
+              message: "이 아이디의 유저가 이미 존재합니다.",
+            })
+          );
+        }
       } else {
         res.writeHead(404);
         res.end("모르는 타입입니다.");
       }
     });
   }
-  //   res.end("POST요청 응답 완료");
 }
+
+function isUserContaions(reqId, users) {
+  let isContain = false;
+  users.forEach((user) => {
+    if (user.id === reqId) {
+      isContain = true;
+    }
+  });
+  return isContain;
+}
+
 function handlePUTRequest(req, res) {
   if (req.url === "/user") {
     let body = "";
@@ -105,15 +122,13 @@ function handlePUTRequest(req, res) {
     req.on("end", () => {
       if (req.headers["content-type"] === "application/json") {
         const reqUser = JSON.parse(body);
-        let isUserContaions = users.map((user) => user.id === reqUser.id);
-        if (isUserContaions) {
+
+        if (isUserContaions(reqUser.id, users)) {
           users.forEach((user) => {
             if (user.id === reqUser.id) {
-              //id와 매치되는 객체를 찾아서 name을 inputName으로 교체.
               user.name = reqUser.inputName;
             }
           });
-          console.log("수정 후 users", users);
           res.writeHead(200, {
             "Content-Type": "application/json",
           });
