@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .userInfo {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        span {
+            font-weight: 800;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>홈페이지입니다.</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/user">User</a>
+    </nav>
+
+    <section>
+        <h2>Hello Node!</h2>
+        <p>Hello server!</p>
+    </section>
+
+    <section>
+        <h2>users</h2>
+        <form id="form">
+            <input type="text" id="username" placeholder="이름을 입력해주세요">
+            <button type="submit">추가</button>
+        </form>
+
+        <!-- 사용자 목록 출력할 div 영역 -->
+        <div id="userTable">
+
+        </div>
+    </section>
+
+    <script src="/static/user.js"></script>
+</body>
+
+</html>
