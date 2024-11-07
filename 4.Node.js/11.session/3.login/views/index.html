@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Log In</title>
+</head>
+
+<body>
+    <nav>
+        <a href="/">home</a>
+        <a href="/login">login</a>
+        <a href="/profile">profile</a>
+        <a href="/logout">logout</a>
+    </nav>
+    <form id="form" action="/login" method="POST">
+        <label for="username">username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="로그인">
+    </form>
+</body>
+
+</html>
