@@ -13,15 +13,17 @@
         <a href="/profile">profile</a>
         <a href="/logout">logout</a>
     </nav>
-    <form id="form" action="/login" method="POST">
+    <form id="form">
         <label for="username">username:</label>
         <input type="text" id="username" name="username" required>
         <br>
         <label for="password">password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
         <br>
         <input type="submit" value="로그인">
+        <p>인덱스1</p>
     </form>
+    <script src="/login.js"></script>
 </body>
 
 </html>

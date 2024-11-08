@@ -15,11 +15,13 @@ const users = [
     id: 1,
     username: "user1",
     password: "pass1",
+    introduction: "안녕하세요",
   },
   {
     id: 2,
     username: "user2",
     password: "pass2",
+    introduction: "안녕하세요2 난 2번 유저",
   },
 ];
 app.use(express.urlencoded({ extended: true }));
@@ -44,6 +46,7 @@ app.get("/login", (req, res) => {
   res.render("login2", { title: "Login Page" });
 });
 app.get("/", (req, res) => {
+  // res.sendFile(path.join(__dirname, "public", "login.html"));
   if (req.session.user) {
     const { username } = req.session.user;
     res.render("index2", { username: username, title: "Welcome" });
@@ -53,9 +56,16 @@ app.get("/", (req, res) => {
 });
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  //사용자가 입력한 id/pw를 users자료구조에서 검색....
-  if (findUser(username, password)) {
-    req.session.user = { username: username, password: password };
+  console.log(req.body);
+  const user = users.find(
+    (e) => e.username === username && e.password === password
+  );
+  console.log(user);
+  if (user) {
+    // 어째서 html파일을 줬는데 페이지가 바뀌지 않는걸까?
+    // res.sendFile(path.join(__dirname, "public", "welcome.html"));
+
+    req.session.user = user;
     res.render("index2", { username: username, title: "Welcome" });
   } else {
     res.status(401).json({ message: "로그인 실패" });
@@ -68,31 +78,35 @@ app.get("/readsession", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  // const user = "세션에서 사용자 정보 가져오기"
   const user = req.session.user;
   if (user) {
-    res.json({ username: user.username, message: "프로필 정보" });
+    res.render("profile", {
+      username: user.username,
+      introduction: user.introduction,
+    });
   } else {
     res.status(401).json({ message: "인증되지 않은 사용자입니다." });
   }
 });
 
-// 로그아웃은 어떻게????
+// 로그아웃
 app.get("/logout", (req, res) => {
-  //세션에서 사용자 정보를 삭제? 어떻게...
   req.session.destroy();
-  res.status(200).json({ message: "로그아웃 성공" });
+  res.render("index2", { username: "손님", title: "Welcome" });
 });
 app.listen(port, () => {
   console.log("서버 레디");
 });
 
-function findUser(username, password) {
-  let isFound = false;
-  users.forEach((user) => {
-    if (user.username === username && user.password === password) {
-      isFound = true;
-    }
-  });
-  return isFound;
-}
+//CHECK LOGIN
+
+app.get("/check-login", (req, res) => {
+  req.session.resetMaxAge();
+  const user = req.session.user;
+  const isLogin = user ? true : false;
+  if (isLogin) {
+    res.json({ isLogin });
+  } else {
+    res.status(401).send("로그인되지 않음");
+  }
+});
