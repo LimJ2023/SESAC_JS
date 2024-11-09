@@ -17,3 +17,10 @@ th {
 button {
   cursor: pointer;
 }
+
+img {
+  width: 100px;
+}
+.total {
+  text-align: right;
+}
