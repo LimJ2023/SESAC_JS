@@ -1,12 +1,12 @@
-import checkLoginStatus from "./checkuser.js";
+import checkLoginFetch from "./checkuser.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("login").addEventListener("click", (e) => {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", (e) => {
+  e.preventDefault();
+  checkLogin();
+  document.getElementById("login").addEventListener("click", () => {
     login();
-    checkLoginStatus();
+    checkLogin();
   });
-  checkLoginStatus();
 });
 
 function login() {
@@ -29,12 +29,21 @@ function login() {
         throw new Error("로그인 실패");
       }
     })
-    .then((data) => {
-      showProfile(data.username);
+    .then((user) => {
+      showProfile(user.username);
     })
     .catch((err) => {
       showLoginForm();
+      console.log("로그인 에러~~", err.message);
     });
+}
+
+function checkLogin() {
+  if (checkLoginFetch()) {
+    showProfile(user.username);
+  } else {
+    showLoginForm();
+  }
 }
 function showProfile(username) {
   document.getElementById("loginFormContainer").style.display = "none";

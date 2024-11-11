@@ -64,3 +64,14 @@ img {
   color: white;
   padding: 14px 16px;
 }
+#logout {
+  height: 30px;
+}
+.plusBtn,
+.minusBtn {
+  border-radius: 2px;
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+  background-color: #ddd;
+}

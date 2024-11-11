@@ -1,10 +1,9 @@
-function checkLoginStatus() {
+export default function checkLoginFetch() {
   fetch("/api/check-login")
     .then((res) => {
       return res.json();
     })
     .then((userData) => {
-      console.log("유저 체크 : ", userData);
       if (userData.username) {
         document.getElementById("user-info").innerHTML = `
           ${userData.username} 님
@@ -13,6 +12,11 @@ function checkLoginStatus() {
         document.getElementById("logout").addEventListener("click", () => {
           logout();
         });
+        return true;
+        // showProfile(userData.username);
+      } else {
+        return false;
+        // showLoginForm();
       }
     });
 }
@@ -33,4 +37,12 @@ function logout() {
     });
 }
 
-export default checkLoginStatus;
+// function showProfile(username) {
+//   document.getElementById("loginFormContainer").style.display = "none";
+//   document.getElementById("profile").style.display = "block";
+//   document.getElementById("usernameSpan").innerText = `${username}`;
+// }
+// function showLoginForm() {
+//   document.getElementById("loginFormContainer").style.display = "block";
+//   document.getElementById("profile").style.display = "none";
+// }

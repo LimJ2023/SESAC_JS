@@ -14,6 +14,15 @@ app.use(
 );
 app.use(express.json());
 app.use(express.static("public"));
+function checkLogin(req, res, next) {
+  const user = req.session.user;
+  if (user) {
+    next();
+  } else {
+    res.status(401).json({ message: "로그인 필요" });
+  }
+}
+
 // 상품 정보
 const users = [
   { id: 1, username: "user1", password: "pass1" },
@@ -68,7 +77,6 @@ app.get("/api/logout", (req, res) => {
   });
 });
 app.get("/api/check-login", (req, res) => {
-  console.log("세션에 저장된 유저 : ", req.session.user);
   const user = req.session.user;
 
   if (user) {
@@ -80,10 +88,60 @@ app.get("/api/check-login", (req, res) => {
 app.get("/api/products", (req, res) => {
   res.json(products);
 });
-app.get("/api/cart", (req, res) => {});
-app.post("/api/cart", (req, res) => {});
-app.put("/api/cart", (req, res) => {});
-app.delete("/api/cart", (req, res) => {});
+app.get("/api/cart", (req, res) => {
+  res.json({ cart: req.session.cart });
+});
+
+app.post("/api/cart/:productId", checkLogin, (req, res) => {
+  const productId = parseInt(req.params.productId);
+  const product = products.find((pro) => pro.id === productId);
+
+  if (!product) {
+    return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
+  }
+  const cart = req.session.cart || [];
+  cart.push({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    quantity: 1,
+  });
+
+  req.session.cart = cart;
+  res.json({ message: "장바구니 담기 성공" });
+});
+app.put("/api/cart/:productId", checkLogin, (req, res) => {
+  const productId = parseInt(req.params.productId);
+  const change = parseInt(req.query.change);
+  console.log("번호 : ", productId, "어떻게 : ", change);
+
+  const cart = req.session.cart || [];
+  const item = cart.find((i) => i.id === productId);
+  if (!item) {
+    return res.status(404).json({ message: "상품 찾을 수 없음" });
+  }
+  item.quantity = Math.max(1, item.quantity + change);
+
+  req.session.cart = cart;
+
+  res.json({ message: "수량변경 성공" });
+});
+
+app.delete("/api/cart/:productId", checkLogin, (req, res) => {
+  const productId = parseInt(req.params.productId);
+
+  let cart = req.session.cart || [];
+  const itemIndex = cart.findIndex((i) => i.id === productId);
+
+  if (itemIndex === -1) {
+    return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
+  }
+
+  cart = cart.filter((_, index) => index !== itemIndex);
+  req.session.cart = cart;
+
+  res.json({ message: "상품 삭제 완료", cart });
+});
 // res api들 <--
 app.listen(port, (req, res) => {
   console.log(`server is running on http://localhost:${port}`);
