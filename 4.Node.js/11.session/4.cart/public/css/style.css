@@ -16,11 +16,19 @@ th {
 
 button {
   cursor: pointer;
+  width: 100px;
+  height: 60px;
+  border: none;
+  border-radius: 12px;
+  background-color: gold;
 }
-
+button:hover {
+  background-color: rgb(255, 224, 47);
+}
 img {
   width: 100px;
 }
 .total {
+  margin: 20px;
   text-align: right;
 }

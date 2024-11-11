@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>홈</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <div id="user-info" style="display: none;">
+                <!-- 사용자 정보 로그아웃 버튼 추가될 곳 -->
+            </div>
+        </ul>
+    </nav>
+    <h1>웰컴투 마이 샵</h1>
+    <p>여기에 아무 정보나 입력</p>
+
+    <div id="loginFormContainer">
+        <h2>로그인</h2>
+        <form id="loginForm">
+            <label for="username">Username : </label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password : </label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" id="login">Login</button>
+        </form>
+    </div>
+
+    <div id="profile" style="display: none;">
+        <h2>안녕하세요 <span id="usernameSpan"></span>님</h2>
+    </div>
+    <script type="module" src="js/home.js"></script>
+</body>
+
+</html>

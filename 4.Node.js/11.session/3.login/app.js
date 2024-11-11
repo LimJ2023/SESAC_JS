@@ -101,7 +101,7 @@ app.listen(port, () => {
 //CHECK LOGIN
 
 app.get("/check-login", (req, res) => {
-  req.session.resetMaxAge();
+  req.session.touch();
   const user = req.session.user;
   const isLogin = user ? true : false;
   if (isLogin) {
