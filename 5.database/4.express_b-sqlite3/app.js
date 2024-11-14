@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const port = 3000;
 const dbfile = "mydb.db";
 const sqlite = require("better-sqlite3");
@@ -8,6 +9,7 @@ const db = new sqlite(dbfile);
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 function initializeDatabase() {
   const sql = fs.readFileSync("initSQL.sql", "utf-8");
@@ -26,11 +28,40 @@ function initializeDatabase() {
 }
 initializeDatabase();
 
-app.get("/:table", (req, res) => {
-  try {
-    const db_table = req.params.table;
+app.get("/", (req, res) => {
+  const filePath = path.join(__dirname, "./index.html");
+  res.sendFile(filePath);
+});
 
-    const query = db.prepare(`SELECT * FROM ${db_table}`);
+app.get("/products_weak", (req, res) => {
+  const searchProduct = req.query.product;
+
+  const queryString = `SELECT * FROM products WHERE name LIKE '%${searchProduct}%'`;
+  const products = db.prepare(queryString).all();
+  res.json(products);
+});
+app.get("/products", (req, res) => {
+  const searchProduct = req.query.product;
+  const query = "%" + searchProduct + "%";
+  try {
+    const selectQuery = db.prepare(`SELECT * FROM products WHERE name LIKE ?`);
+    const products = selectQuery.all(query);
+
+    if (!products) {
+      return res.status(404).send("해당 상품 없음");
+    } else {
+      console.log("검색결과 : ", products);
+      res.json(products);
+    }
+  } catch (error) {
+    res.status(500).send(`서버 오류 ${error}`);
+  }
+});
+app.get("/users", (req, res) => {
+  try {
+    const table = req.params.table;
+
+    const query = db.prepare(`SELECT * FROM ${table}`);
     const tables = query.all();
     res.json(tables);
   } catch (error) {
@@ -106,10 +137,22 @@ app.get("/:table/:id", (req, res) => {
   }
 });
 
-app.get("/products",(req,res)=> {
-    
-})
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  
 
+  try {
+    const user = db.prepare().get(username, password);
+
+    if (!user) {
+      return res.status(404).send("사용자 없음");
+    }
+    res.json(user);
+  } catch (error) {
+    console.log("로그인 중 오류 발생", error.message);
+    res.status(500).send("로그인 중 오류 발생");
+  }
+});
 app.listen(port, () => {
   console.log("서버 레디 온 ", port);
 });

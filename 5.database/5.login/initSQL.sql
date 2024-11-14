@@ -4,7 +4,10 @@
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
     username TEXT,
-    password TEXT
+    password TEXT,
+    email TEXT,
+    created_at DATE DEFAULT DATE(now()),
+    role TEXT
 );
 
 -- 초기 데이터 삽입
