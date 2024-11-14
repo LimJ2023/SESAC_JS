@@ -3,7 +3,19 @@ const fs = require("fs");
 const path = require("path");
 const sqlite3 = require("sqlite3");
 const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
 
+//세션 초기화
+app.use(
+  session({
+    secret: "secret-1234",
+    resave: false,
+    saveUninitialized: true,
+    store: new SQLiteStore({
+      db: "sessions.db", // db 파일명
+    }),
+  })
+);
 //내부 변수
 const app = express();
 const port = 3000;
