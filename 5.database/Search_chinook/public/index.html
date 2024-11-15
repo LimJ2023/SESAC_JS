@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Search Artists in Chinook Database</h1>
+
+    <input type="text" id="search">
+    <select name="type" id="type">
+        <option value="artists">아티스트 이름</option>
+        <option value="albums">앨범 제목</option>
+        <option value="tracks">트랙 제목</option>
+        <option value="composer">작곡가</option>
+        <option value="genres">장르</option>
+        <option value="customers">고객이름</option>
+    </select>
+    <button id="searchButton">Search</button>
+
+    <div>
+        <h2>Search Results</h2>
+        <ul id="list">
+            <li>Various artist</li>
+        </ul>
+    </div>
+    <footer>
+        <button id="prev">이전</button>
+        <span id="pages"> 1 / 7</span>
+        <button id="next">다음</button>
+    </footer>
+    <script src="/script.js"></script>
+</body>
+
+</html>
