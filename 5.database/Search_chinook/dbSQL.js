@@ -5,14 +5,17 @@ const db = new sqlite(dbfile);
 function search(query, scope, page, limit) {
   const fixedQuery = "%" + query + "%";
 
+  // 첫페이지는 0으로 해야할듯
   const offset = (page - 1) * limit;
 
   const preQuery = resultQuery(scope);
   const stmt = db.prepare(preQuery);
-  console.log({ query: fixedQuery, limit: limit, offset: offset }); // 매개변수 확인
 
   return stmt.all({ query: fixedQuery, limit: limit, offset: offset });
 }
+
+// FullName을 별명으로 만들어서 where절에 사용하려고 했는데 잘 안됐음.
+//
 function resultQuery(scope) {
   if (scope === "albums") {
     return "SELECT title FROM albums WHERE title LIKE :query LIMIT :limit OFFSET :offset;";

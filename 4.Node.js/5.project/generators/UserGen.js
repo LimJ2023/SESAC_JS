@@ -2,26 +2,35 @@ const util = require("./util");
 const IdGen = require("./IdGen");
 class NameGenerator {
   constructor() {
-    this.names = [
-      "임요한",
-      "김민준",
-      "박서준",
-      "최도윤",
-      "김지호",
-      "이서윤",
-      "김채원",
-      "이지유",
-      "조수아",
-      "이지아",
-      "강준영",
-      "장승현",
-      "장은지",
-      "조하은",
-      "윤예진",
+    this.lastname = ["김", "이", "박", "최", "정"];
+    this.firstname = [
+      "가온",
+      "나미",
+      "다솜",
+      "종라",
+      "마영",
+      "운바",
+      "요한",
+      "사이",
+      "이즈",
+      "럭스",
+      "가렌",
+      "키타",
+      "봇치",
+      "료",
+      "니지카",
     ];
   }
   generateName() {
     return this.names[util.getRandByLen(this.names)];
+  }
+  getRandomName() {
+    const randomLastName =
+      this.lastname[Math.floor(Math.random() * this.lastname.length)];
+    const randomfirstName =
+      this.firstname[Math.floor(Math.random() * this.firstname.length)];
+
+    return randomLastName + randomfirstName;
   }
 }
 class GenderGenerator {
@@ -66,7 +75,7 @@ class UserGenerator {
     const data = [];
     for (let i = 0; i < count; i++) {
       const id = this.idGen.getUuid();
-      const name = this.nameGen.generateName();
+      const name = this.nameGen.getRandomName();
       const gender = this.genderGen.generateGender();
       const birthday = this.birthGen.generateBirthdate();
       const age = this.ageGen.getAge(birthday);

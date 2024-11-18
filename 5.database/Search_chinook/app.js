@@ -7,7 +7,8 @@ const limit = 10;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+//불필요한 미들웨어였음
+// app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -20,7 +21,6 @@ app.get("/search", (req, res) => {
     const query = req.query.searchQuery;
     const scope = req.query.searchScope;
     const page = Number(req.query.page);
-    console.log("쿼리로 받아온 페이지 : ", page);
     const results = search(query, scope, page, limit);
     const totalPages = resultTotal(query, scope, limit);
     res.json({

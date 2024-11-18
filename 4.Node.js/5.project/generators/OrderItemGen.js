@@ -12,8 +12,8 @@ class OrderItemGenerator {
   async generateOrderItem(filePath, count) {
     const data = [];
 
-    const orders = await this.csv.csvParse(filePath + "order.csv");
-    const items = await this.csv.csvParse(filePath + "item.csv");
+    const orders = await this.csv.csvParse(filePath + "orders.csv");
+    const items = await this.csv.csvParse(filePath + "items.csv");
 
     const order_ids = orders.map((order) => order.Id);
     const item_ids = items.map((item) => item.Id);

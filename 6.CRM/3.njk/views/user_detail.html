@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1>상세 유저 페이지</h1>
+    <h4>고객정보</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Birthday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ data.Id }}</td>
+                <td>{{ data.Name }}</td>
+                <td>{{ data.Gender }}</td>
+                <td>{{ data.Age }}</td>
+                <td>{{ data.Birthdate }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="/js/user_detail.js"></script>
+</body>
+
+</html>

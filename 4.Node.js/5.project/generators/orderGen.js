@@ -14,8 +14,8 @@ class OrderGenerator {
     const data = [];
 
     //비동기 선언 후 await으로 write가 데이터를 읽을 때까지 기다리게 했음
-    const storeData = await this.csv.csvParse(filePath + "store.csv");
-    const userData = await this.csv.csvParse(filePath + "user.csv");
+    const storeData = await this.csv.csvParse(filePath + "stores.csv");
+    const userData = await this.csv.csvParse(filePath + "users.csv");
 
     //store.Id <-- id인지 Id인지 csv에 설정된 헤드를 잘 봐야함...이걸로 고생
     this.store_ids = storeData.map((store) => store.Id);

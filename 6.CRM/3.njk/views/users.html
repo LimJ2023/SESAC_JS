@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1>사용자 테이블</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Birthday</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr onclick="window.location=`users/{{row.Id}}`;">
+                <td>{{ row.Id }}</td>
+                <td>{{ row.Name }}</td>
+                <td>{{ row.Gender }}</td>
+                <td>{{ row.Age }}</td>
+                <td>{{ row.Birthdate }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <footer>
+        <button id="prev">이전</button>
+        <span id="pages"> 1 / 7</span>
+        <button id="next">다음</button>
+    </footer>
+
+    <script src="/js/users.js"></script>
+</body>
+
+</html>
