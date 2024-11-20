@@ -9,6 +9,16 @@
 
 <body>
     <h1>사용자 테이블</h1>
+
+    <div id="input-container">
+        <input type="text" id="search">
+        <label for="type">gender : </label>
+        <select name="type" id="type">
+            <option value="male">male</option>
+            <option value="female">female</option>
+        </select>
+        <button id="searchButton">Search</button>
+    </div>
     <table>
         <thead>
             <tr>
@@ -32,9 +42,17 @@
         </tbody>
     </table>
     <footer>
-        <button id="prev">이전</button>
-        <span id="pages"> 1 / 7</span>
-        <button id="next">다음</button>
+        <ul>
+            {%for page in totalArr %}
+
+            {% if (page === '...') %}
+            <li><span>{{ page }}</span></li>
+            {% else %}
+            <li><a href="/?page={{ page }}"><span>{{ page }}</span></a></li>
+            {% endif %}
+
+            {% endfor %}
+        </ul>
     </footer>
 
     <script src="/js/users.js"></script>

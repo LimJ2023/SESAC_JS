@@ -1,22 +1,23 @@
 const searchButton = document.getElementById("search-button");
 searchButton.addEventListener("click", () => {
   const searchInput = document.getElementById("search-name");
-  fetchUser(searchInput);
+  fetch(searchInput);
 });
 
-async function fetchUsers() {
+async function fetch(page) {
   try {
-    const response = await fetch(`/api/users`);
+    const response = await fetch(`/api/users/${page}`);
     const data = await response.json();
+    localStorage.setItem("page", data.page);
     renderTable(data);
   } catch (error) {
     console.log(error.message);
   }
 }
 
-async function fetchUser(searchName) {
+async function fetch(searchName) {
   try {
-    const response = await fetch(`/api/users/${searchName}`);
+    const response = await fetch(`/api/user/${searchName}`);
     const data = await response.json();
     console.log("가져온 유저 정보 : ", data);
     renderTable(data);
@@ -46,7 +47,7 @@ function renderTable(data) {
   data.map((e) => {
     const bodyRow = document.createElement("tr");
     bodyRow.addEventListener("click", () => {
-      window.location.href = `/users/${e.Id}`;
+      window.location.href = `/user/${e.Id}`;
     });
     for (const [key, value] of Object.entries(e)) {
       if (key !== "Id" && key !== "Address") {
@@ -59,4 +60,5 @@ function renderTable(data) {
   });
 }
 
-fetchUsers();
+const page = localStorage.getItem("page") || 1;
+fetch(page);

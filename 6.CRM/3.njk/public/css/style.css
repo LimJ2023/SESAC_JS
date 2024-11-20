@@ -15,3 +15,22 @@ tr:hover td {
   background-color: blanchedalmond;
   cursor: pointer;
 }
+
+ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 5px;
+}
+
+ul li span {
+  text-align: center;
+  margin: auto;
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+}
+ul li a:hover span {
+  background-color: lightgray;
+}

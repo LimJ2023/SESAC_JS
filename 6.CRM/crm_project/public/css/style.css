@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #e7e7e7;
+}
+tr:hover td {
+  background-color: blanchedalmond;
+  cursor: pointer;
+}
+
+/* 전체 페이징 컨테이너 */
+#page-ul {
+  display: flex; /* 가로 정렬 */
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  padding: 0;
+  margin: 0;
+  gap: 10px; /* 요소 간격 */
+}
+
+/* 개별 페이지 아이템 */
+.page-li {
+  border: 1px solid #ccc; /* 기본 테두리 */
+  border-radius: 5px; /* 둥근 모서리 */
+  overflow: hidden;
+  background-color: #f9f9f9;
+  transition: background-color 0.1s ease;
+}
+
+/* 페이지 링크 스타일 */
+.page-li a {
+  display: block;
+  padding: 10px 15px; /* 내부 여백 */
+  text-decoration: none; /* 밑줄 제거 */
+  color: #333; /* 텍스트 색상 */
+  font-size: 14px; /* 글씨 크기 */
+}
+
+/* 활성화된 페이지 스타일 */
+.page-li.active {
+  background-color: #19baff; /* 활성화된 페이지 배경색 */
+  border-color: #c5c5c5;
+}
+
+.page-li.active a {
+  color: white; /* 활성화된 텍스트 색상 */
+  font-weight: bold; /* 굵은 글씨 */
+}
+
+/* Hover 효과 */
+.page-li a:hover {
+  background-color: #2f88f5; /* Hover 시 배경색 */
+}
+
+.page-li:hover a {
+  color: #333; /* Hover 시 텍스트 색상 */
+}
+
+.active {
+  background-color: deepskyblue;
+}
+.page-li.disabled {
+  pointer-events: none; /* 클릭 불가 */
+  opacity: 0.6; /* 흐리게 처리 */
+  cursor: not-allowed; /* 커서를 비활성화 스타일로 변경 */
+}
+
+.page-li.disabled a {
+  text-decoration: none; /* 링크 스타일 제거 */
+  color: #999; /* 텍스트 색상 변경 */
+}
+nav {
+  text-align: center;
+}

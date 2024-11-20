@@ -1,3 +1,20 @@
+function search() {
+  document
+    .getElementById("searchButton")
+    .addEventListener("click", async (e) => {
+      const page = 1;
+      localStorage.setItem("page", page);
+      e.preventDefault();
+      const query = document.getElementById("search").value;
+      const type = document.getElementById("type").value;
+      const response = await fetch(
+        `/search?searchQuery=${query}&searchScope=${type}&page=${page}`
+      );
+      const data = await response.json();
+      console.log("현재 페이지는 : ", data.pages.page);
+    });
+}
+
 function pageButtons() {
   const prev = document.getElementById("prev");
   const next = document.getElementById("next");

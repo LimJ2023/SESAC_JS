@@ -9,7 +9,6 @@ async function fetchUserDetail() {
 }
 function rederUserDetail(user) {
   const row = document.createElement("p");
-  console.log("유저", user);
   row.textContent = user;
 
   userDetail.appendChild(row);
