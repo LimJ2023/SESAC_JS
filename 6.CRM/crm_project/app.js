@@ -46,7 +46,39 @@ app.get("/orders/", (req, res) => {
 app.get("/orders/:page", (req, res) => {
   res.sendFile(path.resolve("public/order.html"));
 });
+app.get("/orderItem/", (req, res) => {
+  res.sendFile(path.resolve("public/orderItem.html"));
+});
+app.get("/orderItem/:page", (req, res) => {
+  res.sendFile(path.resolve("public/orderItem.html"));
+});
+
 // api 호출용 라우트
+app.get("/api/orderItem/:page", (req, res) => {
+  const curPage = Number(req.params.page) || 1;
+  const offset = (curPage - 1) * LIMIT;
+  const queryParams = [];
+  const countparams = [];
+
+  let query = `SELECT * FROM orderitem WHERE 1=1`;
+  let countQuery = `SELECT count(*) as count FROM orderitem WHERE 1=1`;
+
+  query += ` LIMIT ? OFFSET ?`;
+  queryParams.push(LIMIT);
+  queryParams.push(offset);
+
+  //아무 페이지값도 전달하지 않았을 땐 curPage가 1
+  const stmt = db.prepare(query);
+  const data = stmt.all(queryParams);
+  //전체페이지
+  const totalArr = paging(curPage, countQuery, countparams);
+  console.log(totalArr, "total ARR");
+  res.json({
+    data: data,
+    page: curPage,
+    totalArr: totalArr,
+  });
+});
 app.get("/api/orders/:page", (req, res) => {
   const curPage = Number(req.params.page) || 1;
   const offset = (curPage - 1) * LIMIT;
