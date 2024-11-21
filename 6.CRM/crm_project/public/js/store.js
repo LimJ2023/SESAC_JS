@@ -1,6 +1,6 @@
 async function fetchStore(page) {
   try {
-    const response = await fetch(`/api/store/${page}`);
+    const response = await fetch(`/api/stores/${page}`);
     const data = await response.json();
     renderTable(data.data);
     paging(data.totalArr, data.page);
@@ -26,7 +26,7 @@ function renderTable(data) {
   data.map((e) => {
     const bodyRow = document.createElement("tr");
     bodyRow.addEventListener("click", () => {
-      window.location.href = `/store/${e.Id}`;
+      window.location.href = `/store_detail/${e.Id}`;
     });
     for (const [_, value] of Object.entries(e)) {
       const td = document.createElement("td");
@@ -37,6 +37,7 @@ function renderTable(data) {
   });
 }
 
+// 페이징 처리
 function paging(totalArr, curPage) {
   const ul = document.getElementById("page-ul");
   ul.innerHTML = "";

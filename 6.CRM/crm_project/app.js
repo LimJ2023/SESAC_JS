@@ -28,6 +28,9 @@ app.get("/users/", (req, res) => {
 app.get("/users/:page", (req, res) => {
   res.sendFile(path.resolve("public/users.html"));
 });
+app.get("/store_detail/:id", (req, res) => {
+  res.sendFile(path.resolve("public/store_detail.html"));
+});
 app.get("/stores/", (req, res) => {
   res.sendFile(path.resolve("public/store.html"));
 });
@@ -129,7 +132,7 @@ app.get("/api/item/:page", (req, res) => {
     totalArr: totalArr,
   });
 });
-app.get("/api/store/:page", (req, res) => {
+app.get("/api/stores/:page", (req, res) => {
   const curPage = Number(req.params.page) || 1;
   const offset = (curPage - 1) * LIMIT;
   const queryParams = [];
@@ -147,7 +150,6 @@ app.get("/api/store/:page", (req, res) => {
   const data = stmt.all(queryParams);
   //전체페이지
   const totalArr = paging(curPage, countQuery, countparams);
-  console.log(totalArr, "total ARR");
   res.json({
     data: data,
     page: curPage,
@@ -155,9 +157,7 @@ app.get("/api/store/:page", (req, res) => {
   });
 });
 app.post("/api/users/", (req, res) => {
-  console.log("users쪽 호출");
   const { name, gender } = req.query;
-  console.log("name,gender", name, gender);
   const queryParams = [];
   const countparams = [];
   const curPage = Number(req.params.page) || 1;
@@ -249,6 +249,62 @@ app.get("/api/user/:id", (req, res) => {
   const row = stmt.get(userId);
   res.json(row);
 });
+
+app.get("/api/store/:id", (req, res) => {
+  const storeId = req.params.id;
+  const month = req.query.rev_month;
+
+  const query = `SELECT * FROM stores WHERE id = ?`;
+  const stmt = db.prepare(query);
+  const store = stmt.get(storeId);
+
+  //단골 손님
+  const freQuery = `SELECT o.userId, u.name, count(*) as frequency
+  FROM stores s
+  JOIN orders o ON o.StoreId = s.id
+  JOIN users u ON u.id = o.UserId
+  WHERE s.id = ?
+  GROUP BY o.userId, u.name
+  ORDER BY frequency DESC
+  LIMIT 10;`;
+  const freStmt = db.prepare(freQuery);
+  const frequency = freStmt.all(storeId);
+  if (month) {
+    // 일간 매출 구하기
+    const revenueQuery = `SELECT STRFTIME('%Y-%m-%d',o.OrdersAt) AS day, 
+      SUM(i.UnitPrice) as revenue, COUNT(o.id) as count
+    FROM orders o
+    JOIN orderitem oi ON oi.OrderId = o.Id
+    JOIN items i ON i.Id = oi.ItemId
+    JOIN stores s ON o.StoreId = s.Id
+    WHERE s.id = ?
+      AND STRFTIME('%Y-%m',o.OrdersAt) IN (?)
+      AND STRFTIME('%Y-%m-%d',o.OrdersAt) IS NOT NULL
+    GROUP BY STRFTIME('%Y-%m-%d',o.OrdersAt)
+    ORDER BY STRFTIME('%Y-%m-%d',o.OrdersAt) ASC;`;
+    const revenueStmt = db.prepare(revenueQuery);
+    const revenue = revenueStmt.all(storeId, month);
+    res.json({ store: store, frequency: frequency, revenue: revenue });
+  } else {
+    //  월간 매출 구하기
+    //  잘못된 날짜가 들어가 있으면 NULL값이 나옴 예) 24:30분  2월 30일 등...
+    const revenueQuery = `
+    SELECT STRFTIME('%Y-%m',o.OrdersAt) AS month, 
+      SUM(i.UnitPrice) as revenue, COUNT(o.id) as count
+    FROM orders o
+    JOIN orderitem oi ON oi.OrderId = o.Id
+    JOIN items i ON i.Id = oi.ItemId
+    JOIN stores s ON o.StoreId = s.Id
+    WHERE s.id = ?
+      AND STRFTIME('%Y-%m',o.OrdersAt) IS NOT NULL
+    GROUP BY STRFTIME('%Y-%m',o.OrdersAt)
+    ORDER BY STRFTIME('%Y-%m',o.OrdersAt) ASC;`;
+    const revenueStmt = db.prepare(revenueQuery);
+    const revenue = revenueStmt.all(storeId);
+    res.json({ store: store, frequency: frequency, revenue: revenue });
+  }
+});
+
 app.listen(port, () => {
   console.log(`server is running on ${port}`);
 });
