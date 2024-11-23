@@ -1,13 +1,14 @@
 const userDetail = document.getElementById("user-detail");
 
 const userId = window.location.pathname.split("/").pop();
-async function fetchuserDetail() {
+async function fetchItemDetail() {
   const response = await fetch(`/api/user/${userId}`);
   const data = await response.json();
-  rederUserDetail(data.user);
-  renderOrders(data.revenue);
+  rederItemDetail(data.user);
+  renderRevenue(data.orders);
+  renderVisitRanking(data.visitRanking);
 }
-function rederUserDetail(data) {
+function rederItemDetail(data) {
   const tableHeader = document.getElementById("table-header");
   const tableBody = document.getElementById("table-body");
   tableHeader.innerHTML = "";
@@ -35,10 +36,9 @@ function rederUserDetail(data) {
   });
   tableBody.appendChild(bodyRow);
 }
-function renderOrders(data) {
+function renderRevenue(data) {
   const tableHeader = document.getElementById("order-header");
   const tableBody = document.getElementById("order-body");
-  const id = window.location.pathname.split("/").pop();
   tableHeader.innerHTML = "";
   tableBody.innerHTML = "";
   //헤더 그리기 tr 안에 th 그리기
@@ -56,9 +56,9 @@ function renderOrders(data) {
     for (const [key, value] of Object.entries(e)) {
       const td = document.createElement("td");
       if (key === "orderId") {
-        td.innerHTML = `<a href="/user_detail/${id}?rev_month=${value}">${value}</a>`;
-      } else if (key === "purchasedDate") {
-        td.textContent = Number(value).toLocaleString() + "원";
+        td.innerHTML = `<a href="/order_detail/${value}">${value}</a>`;
+      } else if (key === "itemId") {
+        td.innerHTML = `<a href="/item_detail/${value}">${value}</a>`;
       } else {
         td.textContent = value;
       }
@@ -67,4 +67,12 @@ function renderOrders(data) {
     tableBody.appendChild(bodyRow);
   });
 }
-fetchStoreDetail();
+function renderVisitRanking(data) {
+  const ul = document.getElementById("visitList");
+  data.map((v) => {
+    const li = document.createElement("li");
+    li.textContent = `${v.name} (${v.visitCount}번 방문)`;
+    ul.appendChild(li);
+  });
+}
+fetchItemDetail();

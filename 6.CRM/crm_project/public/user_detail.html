@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/detail.css">
 </head>
 
 <body>
     <header>
         <nav>
-            <ul id="nav-ul">
+            <ul class="nav-ul">
                 <li><a href="/users">User</a></li>
                 <li><a href="/orders">Order</a></li>
                 <li><a href="/orderItem">Order Item</a></li>
@@ -21,8 +22,8 @@
     <section>
         <h4>고객 정보</h4>
         <table>
-            <thead id="user-header"></thead>
-            <tbody id="user-body"></tbody>
+            <thead id="table-header"></thead>
+            <tbody id="table-body"></tbody>
         </table>
     </section>
     <section>
@@ -37,6 +38,10 @@
                 </tr>
             </tbody>
         </table>
+    </section>
+    <section>
+        <h4>자주 방문한 매장 top5</h4>
+        <ul id="visitList"></ul>
     </section>
     </div>
     <script src="/js/user_detail.js"></script>

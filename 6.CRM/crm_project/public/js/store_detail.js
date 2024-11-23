@@ -6,6 +6,7 @@ async function fetchStoreDetail() {
   const month = params.get("rev_month") || "";
   const response = await fetch(`/api/store/${storeId}?rev_month=${month}`);
   const data = await response.json();
+  console.log("store_detail data : ", data);
   rederStoreDetail(data.store);
   renderRevenue(data.revenue);
   renderFrequency(data.frequency);

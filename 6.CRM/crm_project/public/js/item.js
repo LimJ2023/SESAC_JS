@@ -26,7 +26,7 @@ function renderTable(data) {
   data.map((e) => {
     const bodyRow = document.createElement("tr");
     bodyRow.addEventListener("click", () => {
-      window.location.href = `/item/${e.Id}`;
+      window.location.href = `/item_detail/${e.Id}`;
     });
     for (const [_, value] of Object.entries(e)) {
       const td = document.createElement("td");

@@ -43,6 +43,9 @@ app.get("/items/", (req, res) => {
 app.get("/items/:page", (req, res) => {
   res.sendFile(path.resolve("public/item.html"));
 });
+app.get("/item_detail/:id", (req, res) => {
+  res.sendFile(path.resolve("public/item_detail.html"));
+});
 app.get("/orders/", (req, res) => {
   res.sendFile(path.resolve("public/order.html"));
 });
@@ -54,6 +57,9 @@ app.get("/orderItem/", (req, res) => {
 });
 app.get("/orderItem/:page", (req, res) => {
   res.sendFile(path.resolve("public/orderItem.html"));
+});
+app.get("/order_detail/:id", (req, res) => {
+  res.sendFile(path.resolve("public/order_detail.html"));
 });
 
 // api 호출용 라우트
@@ -199,9 +205,7 @@ app.post("/api/users/", (req, res) => {
   });
 });
 app.get("/api/users/:page", (req, res) => {
-  console.log("페이지쪽 호출");
   const { name, gender } = req.query;
-  console.log("이름성별 : ", name, gender);
   const queryParams = [];
   const countparams = [];
   const curPage = Number(req.params.page) || 1;
@@ -233,7 +237,6 @@ app.get("/api/users/:page", (req, res) => {
   //어떻게하면 배열로 1,2,3,4,5,6 ... last - 3, last - 2, last - 1, ...이쁘게 전달해줄 수 있을까?
   //전체페이지
   const totalArr = paging(curPage, countQuery, countparams);
-  console.log(totalArr, "total ARR");
   res.json({
     data: data,
     page: curPage,
@@ -246,8 +249,29 @@ app.get("/api/user/:id", (req, res) => {
   const userId = req.params.id;
   const query = `SELECT * FROM users WHERE id = ?`;
   const stmt = db.prepare(query);
-  const row = stmt.get(userId);
-  res.json(row);
+  const user = stmt.get(userId);
+  // 주문 정보 구하기 -- orderId와 날짜, 매장 정보를 출력
+  const orderQuery = `
+  SELECT o.id as orderId, o.OrdersAt, s.id as storeId, s.Name
+  FROM orders o
+  JOIN stores s ON s.id = o.StoreId
+  JOIN users u ON u.id = o.UserId
+  WHERE u.id = ?;`;
+  const orderStmt = db.prepare(orderQuery);
+  const orders = orderStmt.all(userId);
+
+  // 매장 방문수 구하기
+  const visitQuery = `SELECT (s.type ||' '|| s.name) as name, COUNT(*) AS visitCount
+FROM users u
+JOIN orders o ON o.UserId = u.id
+JOIN stores s ON s.id = o.StoreId
+WHERE u.id = ?
+GROUP BY s.id
+ORDER BY COUNT(*) DESC
+LIMIT 5;`;
+  const visitStmt = db.prepare(visitQuery);
+  const visitRanking = visitStmt.all(userId);
+  res.json({ user: user, orders: orders, visitRanking: visitRanking });
 });
 
 app.get("/api/store/:id", (req, res) => {
@@ -265,6 +289,7 @@ app.get("/api/store/:id", (req, res) => {
   JOIN users u ON u.id = o.UserId
   WHERE s.id = ?
   GROUP BY o.userId, u.name
+  HAVING count(*) > 1
   ORDER BY frequency DESC
   LIMIT 10;`;
   const freStmt = db.prepare(freQuery);
@@ -303,6 +328,40 @@ app.get("/api/store/:id", (req, res) => {
     const revenue = revenueStmt.all(storeId);
     res.json({ store: store, frequency: frequency, revenue: revenue });
   }
+});
+app.get("/api/order_detail/:id", (req, res) => {
+  const orderId = req.params.id;
+  // 주문의 상품 목록 구하기 -- 주문의 상품 목록 구하기
+  const query = `
+    SELECT oi.id, o.id as orderId, i.id as itemId, i.Name
+    FROM orderitem oi
+    JOIN orders o ON o.id = oi.OrderId
+    JOIN items i ON i.id = oi.ItemId
+    WHERE o.id = ?;`;
+  const stmt = db.prepare(query);
+  const orderItem = stmt.all(orderId);
+  res.json({ orderItem: orderItem });
+});
+app.get("/api/item_detail/:id", (req, res) => {
+  const itemId = req.params.id;
+  // 주문의 상품 목록 구하기 -- 주문의 상품 목록 구하기
+  const query = `
+    SELECT name, UnitPrice
+    FROM items
+    WHERE id = ?;`;
+  const stmt = db.prepare(query);
+  const item = stmt.get(itemId);
+
+  const revenueQuery = `SELECT STRFTIME('%Y-%m',o.OrdersAt) AS month,SUM(i.UnitPrice) as revenue, COUNT(*) as count
+    FROM items i
+    JOIN orderitem oi ON oi.ItemId = i.id
+    JOIN orders o ON o.id = oi.OrderId
+    WHERE i.id = ?
+    AND STRFTIME('%Y-%m-%d',o.OrdersAt) IS NOT NULL
+    GROUP BY STRFTIME('%Y-%m',o.OrdersAt);`;
+  const revenueStmt = db.prepare(revenueQuery);
+  const revenue = revenueStmt.all(itemId);
+  res.json({ item: item, revenue: revenue });
 });
 
 app.listen(port, () => {

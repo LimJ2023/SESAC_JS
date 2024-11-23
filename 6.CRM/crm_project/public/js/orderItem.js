@@ -25,12 +25,15 @@ function renderTable(data) {
   // 바디 그리기 tr 안에 td 그리기
   data.map((e) => {
     const bodyRow = document.createElement("tr");
-    bodyRow.addEventListener("click", () => {
-      window.location.href = `/orderItem/${e.Id}`;
-    });
-    for (const [_, value] of Object.entries(e)) {
+    for (const [key, value] of Object.entries(e)) {
       const td = document.createElement("td");
-      td.textContent = value;
+      if (key === "Id") {
+        td.innerHTML = `<a href="/item_detail/${value}">${value}</a>`;
+      } else if (key === "itemId") {
+        td.innerHTML = `<a href="/item_detail/${value}">${value}</a>`;
+      } else {
+        td.textContent = value;
+      }
       bodyRow.appendChild(td);
     }
     tableBody.appendChild(bodyRow);
