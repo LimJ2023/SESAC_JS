@@ -8,10 +8,10 @@ node_modules/
 # 특정만 예외 처리 빼기
 !example.txt
 
-*.db
+
 *.sqlite3
 *.sqlite
-*sqbpro
+
 
 # credentials
 .env
