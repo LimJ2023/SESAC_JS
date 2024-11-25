@@ -8,6 +8,7 @@ const db = new sqlite3("db-sample.db");
 const LIMIT = Number(process.env.LIMIT);
 
 router.post("/users/", (req, res) => {
+  try {
     const { name, gender } = req.query;
     const queryParams = [];
     const countparams = [];
@@ -18,38 +19,41 @@ router.post("/users/", (req, res) => {
     let countQuery = `SELECT count(*) as count FROM users WHERE 1=1`;
 
     if (name) {
-        query += ` AND name = ?`;
-        countQuery += ` AND name = ?`;
-        queryParams.push(name);
-        countparams.push(name);
+      query += ` AND name = ?`;
+      countQuery += ` AND name = ?`;
+      queryParams.push(name);
+      countparams.push(name);
     }
     if (gender) {
-        query += ` AND gender = ?`;
-        countQuery += ` AND gender = ?`;
-        queryParams.push(gender);
-        countparams.push(gender);
+      query += ` AND gender = ?`;
+      countQuery += ` AND gender = ?`;
+      queryParams.push(gender);
+      countparams.push(gender);
     }
 
     query += ` LIMIT ? OFFSET ?`;
     queryParams.push(LIMIT);
     queryParams.push(offset);
 
-    //아무 페이지값도 전달하지 않았을 땐 curPage가 1
     const stmt = db.prepare(query);
     const data = stmt.all(queryParams);
-    //어떻게하면 배열로 1,2,3,4,5,6 ... last - 3, last - 2, last - 1, ...이쁘게 전달해줄 수 있을까?
     //전체페이지
     const totalArr = paging(curPage, countQuery, countparams);
     console.log(totalArr, "total ARR");
     res.json({
-        data: data,
-        page: curPage,
-        totalArr: totalArr,
-        name: name,
-        gender: gender,
+      data: data,
+      page: curPage,
+      totalArr: totalArr,
+      name: name,
+      gender: gender,
     });
+  } catch (error) {
+    console.log("/users/ 에서 오류 발생", error.message);
+    res.status(500).json({ error: "사용자 검색 중 오류 발생" });
+  }
 });
 router.get("/users/:page", (req, res) => {
+  try {
     const { name, gender } = req.query;
     const queryParams = [];
     const countparams = [];
@@ -60,16 +64,16 @@ router.get("/users/:page", (req, res) => {
     let countQuery = `SELECT count(*) as count FROM users WHERE 1=1`;
 
     if (name) {
-        query += ` AND name = ?`;
-        countQuery += ` AND name = ?`;
-        queryParams.push(name);
-        countparams.push(name);
+      query += ` AND name = ?`;
+      countQuery += ` AND name = ?`;
+      queryParams.push(name);
+      countparams.push(name);
     }
     if (gender) {
-        query += ` AND gender = ?`;
-        countQuery += ` AND name = ?`;
-        queryParams.push(gender);
-        countparams.push(gender);
+      query += ` AND gender = ?`;
+      countQuery += ` AND name = ?`;
+      queryParams.push(gender);
+      countparams.push(gender);
     }
 
     query += ` LIMIT ? OFFSET ?`;
@@ -81,14 +85,19 @@ router.get("/users/:page", (req, res) => {
 
     const totalArr = paging(curPage, countQuery, countparams);
     res.json({
-        data: data,
-        page: curPage,
-        totalArr: totalArr,
-        name: name,
-        gender: gender,
+      data: data,
+      page: curPage,
+      totalArr: totalArr,
+      name: name,
+      gender: gender,
     });
+  } catch (error) {
+    console.log("/users/:page 에서 오류 발생", error.message);
+    res.status(500).json({ error: "유저 목록을 불러오는 중 오류 발생" });
+  }
 });
 router.get("/user/:id", (req, res) => {
+  try {
     const userId = req.params.id;
     const query = `SELECT * FROM users WHERE id = ?`;
     const stmt = db.prepare(query);
@@ -129,10 +138,14 @@ router.get("/user/:id", (req, res) => {
     const purchaseRanking = purchaseStmt.all(userId);
 
     res.json({
-        user: user,
-        orders: orders,
-        visitRanking: visitRanking,
-        purchaseRanking: purchaseRanking,
+      user: user,
+      orders: orders,
+      visitRanking: visitRanking,
+      purchaseRanking: purchaseRanking,
     });
+  } catch (error) {
+    console.log("/user/:id 에서 오류 발생", error.message);
+    res.status(500).json({ error: "유저 정보를 불러오는 중 오류 발생" });
+  }
 });
 module.exports = router;
