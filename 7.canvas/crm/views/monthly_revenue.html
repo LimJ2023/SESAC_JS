@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>월간 매출액</h1>
+    <table>
+        <tr>
+            <th>년-월</th>
+            <th>해당 월 매출</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.month }}</td>
+            <td>{{ row.revenue }}</td>
+            <td>{{ row.count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <canvas id="chart" width="800" height="200"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const canvas = document.getElementById("chart");
+        const ctx = canvas.getContext("2d");
+        const labels = {{ labels | safe }};
+        const data = {{ charData | safe }};
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '월간 매출액',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

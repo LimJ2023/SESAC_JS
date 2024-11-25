@@ -9,16 +9,15 @@ function paging(curPage, countQuery, params) {
   const totalArr = [];
   let lastElement = undefined;
   for (let i = 1; i <= total; i++) {
-    //맨 앞, 맨 뒤의 3개 페이지는 항상 표시함
+    // 맨 앞, 맨 뒤의 3개 페이지는 항상 표시함
     if (i <= 3) {
       totalArr.push(i);
       lastElement = i;
     } else if (i >= total - 2) {
       totalArr.push(i);
       lastElement = i;
-    }
-    // 페이지 기준 앞뒤로 3개 페이지 들어감
-    else if (i >= curPage - pageRange && i <= curPage + pageRange) {
+    } else if (i >= curPage - pageRange && i <= curPage + pageRange) {
+      // 페이지 기준 앞뒤로 3개 페이지 들어감
       totalArr.push(i);
       lastElement = i;
     } else {
