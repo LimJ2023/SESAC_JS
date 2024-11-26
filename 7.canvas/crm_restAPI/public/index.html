@@ -17,82 +17,110 @@
             .then((data) => {
                 const canvas = document.getElementById("chart");
                 const ctx = canvas.getContext("2d");
-                const labels = data.labels;
-                const revenueData = data.chartData;
-                const counts = data.counts;
-                const revenueChart = new Chart(ctx, {
-                    data: {
-                        datasets: [{
-                            type: 'bar',
-                            label: 'Bar Dataset',
-                            data: revenueData,
-                        }, {
-                            type: 'line',
-                            label: 'Line Dataset',
-                            data: counts,
 
-                        }],
+                const labels = data.labels; // 예: ["January", "February", "March"]
+                const revenueData = data.chartData; // 예: [100, 200, 300]
+                const counts = revenueData.map((value, index) => value); // line을 bar의 꼭대기로 설정
+
+                const revenueChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
                         labels: labels,
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'Revenue',
+                                data: revenueData,
+                                backgroundColor: 'rgba(54, 162, 235, 0.8)', // Bar 색상
+                            },
+                            {
+                                type: 'line',
+                                label: 'Total Count',
+                                data: counts,
+                                borderColor: 'rgba(255, 99, 132, 1)', // Line 색상
+                                borderWidth: 2,
+                                fill: false, // Line 밑 채우기 비활성화
+                                pointBackgroundColor: 'rgba(255, 99, 132, 1)', // 점 색상
+                            },
+                        ],
                     },
                     options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Revenue and Count',
+                            },
+                        },
                         scales: {
                             x: {
-                                stacked: true
+                                stacked: true, // x축에서 bar를 스택으로
+                            },
+                            y: {
+                                stacked: false, // y축에서 line 데이터는 개별 표시
+                                title: {
+                                    display: true,
+                                    text: 'Values',
+                                },
+                            },
+                        },
+                    },
+                });
+            });
+
+        fetch("/gender_dist_data")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("받아온 데이터:", data);
+                const canvas = document.getElementById("ageDistChart");
+                const ctx = canvas.getContext("2d");
+
+                const labels = [...new Set(data.ageDist)];
+                const maleCount = data.maleCount;
+                const femaleCount = data.femaleCount;
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                type: 'bar',
+                                label: 'male Count',
+                                data: maleCount,
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                stack: 'Gender', // 동일 스택 그룹 지정
+                            },
+                            {
+                                type: 'bar',
+                                label: 'femaleCount',
+                                data: femaleCount,
+                                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                                stack: 'Gender', // 동일 스택 그룹 지정
+                            },
+                        ],
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '성별 분포 차트',
+                            },
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
                             },
                             y: {
                                 stacked: true,
                                 title: {
                                     display: true,
-                                    text: "Count"
-                                }
-                            }
-                        }
-                    }
+                                    text: 'Count',
+                                },
+                            },
+                        },
+                    },
                 });
             });
-        fetch("/gender_dist_data").then(response => response.json()).then(data => {
-            console.log("받아온 나이대성별,", data);
-            const canvas = document.getElementById("ageDistChart");
-            const ctx = canvas.getContext("2d");
-            const labels = data.ageDist;
-            const userCount = data.userCount;
-            const gender = data.gender;
-            const revenueChart = new Chart(ctx, {
-                data: {
-                    datasets: [{
-                        type: 'bar',
-                        label: 'Bar Dataset',
-                        data: userCount,
-                    },
-                    {
-                        type: 'bar',
-                        label: 'gender',
-                        data: gender,
-                    }],
-                    labels: labels,
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '성별분포차트'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            stacked: true,
-                            title: {
-                                display: true,
-                                text: "Count"
-                            }
-                        }
-                    }
-                }
-            });
-        })
     </script>
 </body>
 

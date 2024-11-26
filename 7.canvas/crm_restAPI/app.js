@@ -52,19 +52,19 @@ app.get("/gender_dist_data", (req, res) => {
   // 연령대 별로 나눈 쿼리문
   db.all(
     `
-        SELECT
-        CASE
-            WHEN age BETWEEN 10 AND 19 THEN '10대'
-            WHEN age BETWEEN 20 AND 29 THEN '20대'
-            WHEN age BETWEEN 30 AND 39 THEN '30대'
-            WHEN age BETWEEN 40 AND 49 THEN '40대'
-            WHEN age BETWEEN 50 AND 59 THEN '50대'
-            WHEN age BETWEEN 60 AND 69 THEN '60대'
-        END AS ageGroup,
-        gender,
-        COUNT(*) AS userCount
-    FROM users
-    GROUP BY ageGroup, gender;
+  SELECT
+    CASE
+      WHEN age BETWEEN 10 AND 19 THEN '10대'
+      WHEN age BETWEEN 20 AND 29 THEN '20대'
+      WHEN age BETWEEN 30 AND 39 THEN '30대'
+      WHEN age BETWEEN 40 AND 49 THEN '40대'
+      WHEN age BETWEEN 50 AND 59 THEN '50대'
+      WHEN age BETWEEN 60 AND 69 THEN '60대'
+    END AS ageGroup,
+    gender,
+    COUNT(*) AS userCount
+  FROM users
+  GROUP BY ageGroup, gender;
     `,
     [],
     (err, rows) => {
@@ -72,14 +72,20 @@ app.get("/gender_dist_data", (req, res) => {
         console.log("월간 데이터 가져오는 중 실패");
         res.send("실패!");
       } else {
-        console.log("나이대성별", rows);
+        // console.log("나이대성별", rows);
         const ageDist = rows.map((e) => e.ageGroup);
-        const userCount = rows.map((e) => e.userCount);
-        const gender = rows.map((e) => e.gender);
+        const maleCount = rows
+          .filter((e) => e.Gender === "남성")
+          .map((e) => e.userCount);
+        const femaleCount = rows
+          .filter((e) => e.Gender === "여성")
+          .map((e) => e.userCount);
+
+        console.log(maleCount, femaleCount);
         res.json({
           ageDist,
-          userCount,
-          gender,
+          maleCount,
+          femaleCount,
         });
       }
     }
