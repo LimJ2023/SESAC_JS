@@ -4,6 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #chart {
+            width: 40%;
+            height: 200px;
+        }
+    </style>
 </head>
 
 <body>
@@ -12,6 +36,7 @@
         <tr>
             <th>년-월</th>
             <th>해당 월 매출</th>
+            <th>판매량</th>
         </tr>
         {% for row in rows %}
         <tr>
@@ -22,31 +47,40 @@
         {% endfor %}
     </table>
 
-    <canvas id="chart" width="800" height="200"></canvas>
+    <canvas id="chart"></canvas>
+    <canvas id="chartLine"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const canvas = document.getElementById("chart");
         const ctx = canvas.getContext("2d");
         const labels = {{ labels | safe }};
         const data = {{ charData | safe }};
+        const counts = {{ counts | safe}};
         new Chart(ctx, {
-            type: 'bar',
             data: {
-                labels: labels,
                 datasets: [{
-                    label: '월간 매출액',
-                    data: data,
-                    borderWidth: 1
-                }]
+                    type: 'bar',
+                    label: 'Bar Dataset',
+                    data: data
+                }, {
+                    type: 'line',
+                    label: 'Line Dataset',
+                    data: counts,
+
+                }],
+                labels: labels,
             },
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        stacked: true
                     }
                 }
-            }
+            },
         });
+
+
+
 
     </script>
 </body>

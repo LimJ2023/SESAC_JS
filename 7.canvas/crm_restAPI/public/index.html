@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="chart"></canvas>
+    <canvas id="ageDistChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        fetch("/revenue_data")
+            .then((response) => response.json())
+            .then((data) => {
+                const canvas = document.getElementById("chart");
+                const ctx = canvas.getContext("2d");
+                const labels = data.labels;
+                const revenueData = data.chartData;
+                const counts = data.counts;
+                const revenueChart = new Chart(ctx, {
+                    data: {
+                        datasets: [{
+                            type: 'bar',
+                            label: 'Bar Dataset',
+                            data: revenueData,
+                        }, {
+                            type: 'line',
+                            label: 'Line Dataset',
+                            data: counts,
+
+                        }],
+                        labels: labels,
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: "Count"
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        fetch("/gender_dist_data").then(response => response.json()).then(data => {
+            console.log("받아온 나이대성별,", data);
+            const canvas = document.getElementById("ageDistChart");
+            const ctx = canvas.getContext("2d");
+            const labels = data.ageDist;
+            const userCount = data.userCount;
+            const gender = data.gender;
+            const revenueChart = new Chart(ctx, {
+                data: {
+                    datasets: [{
+                        type: 'bar',
+                        label: 'Bar Dataset',
+                        data: userCount,
+                    },
+                    {
+                        type: 'bar',
+                        label: 'gender',
+                        data: gender,
+                    }],
+                    labels: labels,
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '성별분포차트'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: "Count"
+                            }
+                        }
+                    }
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

@@ -38,13 +38,23 @@ app.get("/", (req, res) => {
         console.log("쿼리 실행 결과 : ", rows);
         const labels = rows.map((e) => e.month);
         const charData = rows.map((e) => e.revenue);
+        const counts = rows.map((e) => e.count);
         res.render("monthly_revenue", {
+          rows: rows,
           charData: JSON.stringify(charData),
           labels: JSON.stringify(labels),
+          counts: JSON.stringify(counts),
         });
       }
     }
   );
+  db.close((err) => {
+    if (err) {
+      console.error("db닫기 실패", err.message);
+    } else {
+      console.log("db 닫음");
+    }
+  });
 });
 app.listen(port, (req, res) => {
   console.log("server is running on ", port);
