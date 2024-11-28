@@ -10,7 +10,13 @@ document.getElementById("name").addEventListener("blur", (e) => {
     e.target.classList.add("is-valid");
   }
 });
-
+function nameValid(input) {
+  let isValid = true;
+  if (input.length < 3 || input.length > 10) {
+    isValid = false;
+  }
+  return isValid;
+}
 document.getElementById("password").addEventListener("blur", (e) => {
   const password = document.getElementById("password").value;
   // 비밀번호 체크
@@ -30,6 +36,13 @@ document.getElementById("password").addEventListener("blur", (e) => {
     e.target.classList.add("is-valid");
   }
 });
+function nameValid(input) {
+  let isValid = true;
+  if (input.length < 3 || input.length > 10) {
+    isValid = false;
+  }
+  return isValid;
+}
 document.getElementById("email").addEventListener("blur", (e) => {
   console.log(e.target.value);
   const email = document.getElementById("email").value;
