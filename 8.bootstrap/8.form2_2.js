@@ -56,18 +56,47 @@ document.getElementById("email").addEventListener("blur", (e) => {
   }
 });
 
-document.getElementById("checkbox").addEventListener("blur", (e) => {
-  console.log(e.target);
-});
-
-form.addEventListener("submit", (e) => {
+document.getElementById("form").addEventListener("submit", (e) => {
   e.preventDefault();
-
+  const result = document.getElementById("result");
   const formData = new FormData(form);
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
   const birthdate = formData.get("birth");
+  const checkBoxes = document.querySelectorAll(".checkBox");
+  let isValid = false;
+  let checkBoxVal = false;
+  checkBoxes.forEach((box) => {
+    if (box.checked) {
+      checkBoxVal = true;
+    }
+  });
 
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !birthdate ||
+    !checkBoxVal ||
+    document.querySelector(".is-invalid")
+  ) {
+    isValid = false;
+  } else {
+    isValid = true;
+  }
+
+  if (isValid) {
+    result.innerHTML = `
+    <div class="alert alert-success">
+                    <h5>모든 입력이 올바릅니다!</h5>
+                </div>
+    `;
+  } else {
+    result.innerHTML = `
+    <div class="alert alert-danger">
+                    <h5>입력 항목을 확인하세요.</h5>
+                </div>`;
+  }
   console.log("get ", name, email, password);
 });

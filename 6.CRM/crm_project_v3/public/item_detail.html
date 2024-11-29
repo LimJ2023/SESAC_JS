@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="nav-ul">
+                <li><a href="/users">User</a></li>
+                <li><a href="/orders">Order</a></li>
+                <li><a href="/orderItem">Order Item</a></li>
+                <li><a href="/items">Item</a></li>
+                <li><a href="/stores">Store</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <h4>상품 정보</h4>
+        <table>
+            <thead id="table-header"></thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </section>
+    <section>
+        <h4>월간 매출액</h4>
+        <table>
+            <thead id="revenue-header"></thead>
+            <tbody id="revenue-body"></tbody>
+        </table>
+    </section>
+    </div>
+    <canvas id="chart" width="800" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/item_detail.js"></script>
+</body>
+
+</html>
