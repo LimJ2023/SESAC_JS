@@ -75,6 +75,7 @@ function renderVisitRanking(data) {
   const ul = document.getElementById("visitList");
   data.map((v) => {
     const li = document.createElement("li");
+    li.classList.add("list-group-item");
     li.textContent = `${v.name} (${v.visitCount}번 방문)`;
     ul.appendChild(li);
   });
@@ -83,6 +84,7 @@ function renderPurchaseRanking(data) {
   const ul = document.getElementById("purchaseList");
   data.map((v) => {
     const li = document.createElement("li");
+    li.classList.add("list-group-item");
     li.textContent = `${v.Name} (${v.purchaseCount}번 주문)`;
     ul.appendChild(li);
   });
@@ -112,4 +114,12 @@ function drawChart(labels, data) {
     },
   });
 }
+document.getElementById("darkmodebtn").addEventListener("click", (e) => {
+  const mode = e.target.textContent;
+  e.target.innerText = mode === "다크 모드로" ? "라이트 모드로" : "다크 모드로";
+  const currentTheme = document.documentElement.getAttribute("data-bs-theme");
+  const switchTheme = currentTheme === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-bs-theme", switchTheme);
+});
+
 fetchItemDetail();

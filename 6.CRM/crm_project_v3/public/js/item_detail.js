@@ -136,5 +136,11 @@ function drawBar(data) {
     },
   });
 }
-
+document.getElementById("darkmodebtn").addEventListener("click", (e) => {
+  const mode = e.target.textContent;
+  e.target.innerText = mode === "다크 모드로" ? "라이트 모드로" : "다크 모드로";
+  const currentTheme = document.documentElement.getAttribute("data-bs-theme");
+  const switchTheme = currentTheme === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-bs-theme", switchTheme);
+});
 fetchItemDetail();

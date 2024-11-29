@@ -44,26 +44,38 @@ function renderTable(data) {
 function paging(totalArr, curPage) {
   const ul = document.getElementById("page-ul");
   ul.innerHTML = "";
+
   totalArr.forEach((page) => {
     const li = document.createElement("li");
-    li.classList.add("page-li");
+    li.classList.add("page-item"); // Bootstrap 페이지 항목 클래스
+
+    // 페이지 링크
     li.innerHTML = `
-                      <a href="/orders/${page}">${page}</a>
+                      <a href="/orders/${page}" class="page-link">${page}</a>
                   `;
 
-    ul.appendChild(li);
-
+    // 현재 페이지 강조
     if (curPage === page) {
       li.classList.add("active");
     }
+
+    // 비활성 페이지 처리
     if (page === "...") {
       li.classList.add("disabled");
       const link = li.querySelector("a");
       link.removeAttribute("href");
       link.style.pointerEvents = "none";
     }
+
+    ul.appendChild(li);
   });
 }
-
+document.getElementById("darkmodebtn").addEventListener("click", (e) => {
+  const mode = e.target.textContent;
+  e.target.innerText = mode === "다크 모드로" ? "라이트 모드로" : "다크 모드로";
+  const currentTheme = document.documentElement.getAttribute("data-bs-theme");
+  const switchTheme = currentTheme === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-bs-theme", switchTheme);
+});
 const page = window.location.pathname.split("/").pop() || 1;
 fetchOrder(page);
