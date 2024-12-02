@@ -1,6 +1,6 @@
 const canvas = document.getElementById("snake");
 const ctx = canvas.getContext("2d");
-
+const scoreDiv = document.getElementById("score");
 let snake = [
   {
     x: 5,
@@ -46,6 +46,7 @@ function checkEndGame() {
     checkBodyCollision()
   ) {
     console.log("게임오버");
+    scoreDiv.innerText = score + "점";
     clearInterval(game);
   }
 }
@@ -148,6 +149,8 @@ function checkEatFood() {
     score++;
     //먹을시 몸통 추가
     addSnakeBody(tail.x, tail.y);
+    score++;
+    scoreDiv.innerText = score + "점";
     food.pop();
     food.push(generateFood());
   }
