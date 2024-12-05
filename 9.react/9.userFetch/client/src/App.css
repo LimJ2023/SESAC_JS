@@ -1,3 +1,12 @@
 .App {
   text-align: center;
 }
+
+.error p {
+  color: crimson;
+  padding: 10px;
+  background-color: rgb(255, 148, 170);
+  border: 2px solid rgb(215, 0, 43);
+  font-weight: bold;
+  border-radius: 5px;
+}

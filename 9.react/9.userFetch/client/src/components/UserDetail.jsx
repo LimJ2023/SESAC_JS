@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 function UserDetail() {
     const {id} = useParams();
     const [user, setUser] = useState(null);
-    const [error, setError] = useState(null);
     const fetchUser = async () => {
         try {
             const response = await fetch(`http://localhost:3001/api/users/${id}`);
@@ -33,7 +32,7 @@ function UserDetail() {
             <p>나이 : {user.age}</p>
             </div>
         ) :
-        (<div>
+        (<div className='error'>
             <p>유저를 찾을 수 없습니다.</p>    
         </div>)
         }
