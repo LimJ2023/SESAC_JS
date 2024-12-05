@@ -1,27 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 function UserDetail() {
     const {id} = useParams();
-    const users = [
-        {
-            id: 1, name: "Alice", email: "alice@example.com", age: 20
-        },
-        {
-            id: 2, name: "Bob", email: "bob@example.com", age: 30
-        },
-        {
-            id: 3, name: "Charlie", email: "charlie@example.com", age: 40
-        },
-    ]
-    const user = users.find((u) => u.id === parseInt(id));
+    const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
+    const fetchUser = async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/api/users/${id}`);
+            
+            const data = await response.json();
+            if(data.error) {
+                throw new Error(data.message)
+            }
+            setUser(data);
+        } catch (error) {
+            console.log("에러발생 : ", error.message);
+        }
+    }
+    useEffect(() => {
+        fetchUser();
+    },[])
   return (
-    <div>
-        <h2>User Detail</h2>
-        <p>유저 상세 페이지 : {user.id}</p>
-        <p>이름: {user.name}</p>
-        <p>이메일 : {user.email}</p>
-        <p>나이 : {user.age}</p>
+    
+      <div>
+        {user ? (
+            <div>
+            <h2>User Detail</h2>
+            <p>유저 상세 페이지 : {user.id}</p>
+            <p>이름: {user.name}</p>
+            <p>이메일 : {user.email}</p>
+            <p>나이 : {user.age}</p>
+            </div>
+        ) :
+        (<div>
+            <p>유저를 찾을 수 없습니다.</p>    
+        </div>)
+        }
+        
     </div>
   )
 }
