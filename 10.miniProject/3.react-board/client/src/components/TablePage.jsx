@@ -23,7 +23,7 @@ function TablePage() {
     <main>
         <Container >
         <section >
-            <Table striped bordered hober align='center'>
+            <Table striped bordered hover >
                 <thead >
                     <tr>
                         <th>번호</th>

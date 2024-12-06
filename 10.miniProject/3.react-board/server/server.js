@@ -45,7 +45,7 @@ app.post("/post", upload.single("image"), (req, res) => {
         values(?,?,?,date('now'));
     `
   ).run(title, content, image);
-
+  console.log(req.url);
   res.redirect("http://localhost:3000/");
 });
 
