@@ -43,7 +43,7 @@ function TablePage() {
         </section>
 
         <section>
-            <div className="d-grid"> 
+            <div> 
             <Button variant="outline-success" size="lg" onClick={() => {
                 navigate("/post");
             }}>글작성</Button>
