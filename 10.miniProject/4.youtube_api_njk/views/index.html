@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>유튜브 검색기</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>유튜브 검색</h1>
+
+        <!-- 검색창 -->
+        <form action="/search" method="get">
+            <div class="input-box">
+                <input type="text" id="query" name="q">
+                <button type="submit">검색</button>
+            </div>
+        </form>
+        <!-- 플레이어 -->
+        {% if selectedVideo %}
+        <div style="margin-top: 20px;"></div>
+        <h2>{{ selectedVideo.title }}</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{selectedVideo.videoId}}"
+            frameborder="0"></iframe>
+        {% endif %}
+        <!-- 결과 목록 -->
+        <table>
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>설명</th>
+                    <th>조회수</th>
+                    <th>이미지</th>
+                    <th>링크</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.description }}</td>
+                    <td>{{ row.viewCount }}</td>
+                    <td><img src="{{ row.thumbnail.url }}"></td>
+                    <th><a href="/play?videoId={{ row.videoId }}">{{row.link}}</a></th>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

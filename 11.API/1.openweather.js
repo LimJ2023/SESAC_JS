@@ -7,6 +7,7 @@ const params = {
   q: "Seoul",
   apiKey: process.env.OPENWEATHER_API_KEY, //바로 쓰지 않는다.
   units: "metric", // 섭씨로 바꿈.
+  lang: "KR",
 };
 
 const fetchweather = async () => {
