@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>캡챠</h1>
+
+    <form action="http://localhost:3000/captcha/result" method="get">
+        <img src="" id="image">
+
+        <input type="text" placeholder="입력해주세요" name="value">
+        <input type="hidden" name="key" id="key">
+        <button type="submit">확인</button>
+    </form>
+    <script>
+        async function fetchCaptchaImage() {
+            const response = await fetch("http://localhost:3000/captcha/nkey")
+            const data = await response.blob();
+            const imageUrl = URL.createObjectURL(data);
+            document.getElementById("image").src = imageUrl;
+
+            const responseKey = await fetch("http://localhost:3000/captcha/key")
+            const keyData = await responseKey.json();
+            console.log("키값 ", keyData.key);
+            document.getElementById("key").value = keyData.key;
+        }
+        fetchCaptchaImage();
+    </script>
+</body>
+
+</html>

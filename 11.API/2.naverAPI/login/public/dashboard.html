@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .container div>div {
+            width: 300px;
+            height: 120px;
+            background-color: beige;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>사용자 정보 출력</h1>
+
+    <div class="container" id="container">
+    </div>
+
+    <div>
+        <a href="http://localhost:3000/logout"><img src="./btnG_로그아웃.png" alt="" width="200"></a>
+    </div>
+
+    <script>
+        async function fetchUserInfo() {
+            const response = await fetch("http://localhost:3000/api/user");
+            const data = await response.json();
+            console.log("유저정보 : ", data);
+
+            const container = document.getElementById("container");
+            const div = document.createElement("div");
+            if (data.error) {
+                div.innerText = "권한이 없음";
+            } else {
+                    div.innerHTML = `
+                <div>
+                    닉네임 : ${data.nickname}
+                </div>
+                <div>
+                    이메일 : ${data.email}
+                </div>
+                <div>
+                    성별 : ${data.gender}
+                </div>
+                <div>
+                    생일 : ${data.birthday}
+                </div>
+                `;
+            }
+            container.appendChild(div);
+        }
+        fetchUserInfo();
+    </script>
+</body>
+
+</html>

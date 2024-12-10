@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>네이버 블로그 검색</h1>
+    <form id="form">
+        <input type="text" name="query" id="query">
+        <button type="submit">검색</button>
+    </form>
+
+    <ul id="results">
+
+    </ul>
+    <script>
+        const list = document.getElementById("list");
+
+        document.getElementById("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const results = document.getElementById("results");
+            results.innerHTML = ``;
+            const query = document.getElementById("query").value;
+
+            try {
+                const response = await fetch(`http://127.0.0.1:3000/search/blog?query=${query}`);
+                const data = await response.json();
+                if (!data.items || data.items.length === 0) {
+                    const li = document.createElement("li");
+                    li.innerHTML = `검색 결과가 없습니다.`;
+                    results.appendChild(li);
+                } else {
+
+
+                    const result = data.items;
+                    console.log(result);
+                    for (const item of result) {
+                        // const ul = document.createElement("ul");
+                        // ul.innerHTML = `
+                        //     <li>${item.bloggername}</li>
+                        //     <li>${item.title}</li>
+                        //     <li>${item.description}</li>
+                        // `;
+                        // list.appendChild(ul);
+                        const li = document.createElement("li");
+
+                        li.innerHTML = `
+                <div>
+                    <p>${item.bloggername}</p>
+                    <a href="${item.link}"><p>${item.title}</p></a>
+                    <p>${item.description}</p>
+                    <small>post date : ${item.postdate}</small>
+                </div>
+                `;
+                        results.appendChild(li);
+                    }
+                }
+            } catch (error) {
+                console.log("검색결과 가져오는 중 에러", error.message);
+            }
+        })
+    </script>
+</body>
+
+</html>
