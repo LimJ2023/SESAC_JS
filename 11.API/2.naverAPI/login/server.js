@@ -1,11 +1,11 @@
 require("dotenv").config();
 const axios = require("axios");
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 const path = require("path");
 const session = require("express-session");
 const request = require("request");
-const morgan = require("morgan");
 
 const client_id = process.env.NAVER_CLIENT_ID;
 const client_secret = process.env.NAVER_CLIENT_SECRET;
