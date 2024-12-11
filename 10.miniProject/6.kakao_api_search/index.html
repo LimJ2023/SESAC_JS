@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="input" name="q">
+        <button id="webSearch" data-type="web">웹검색</button>
+        <button id="imageSearch" data-type="image">이미지검색</button>
+        <button id="videoSearch" data-type="video">영상검색</button>
+        <div>
+            <ul id="ul">
+            </ul>
+        </div>
+        <div>
+
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll("button").forEach(button => {
+            button.addEventListener("click", async (e) => {
+                try {
+                    const page = localStorage.getItem("page") || localStorage.setItem("page", 1);
+                    const query = document.getElementById("input").value;
+                    const response = await fetch(`http://localhost:3000/webSearch?q=${query}&p=${page}&type=${button.dataset.type}`);
+                    const data = await response.json();
+                    console.log("data : ", data);
+                    const items = data.documents;
+                    displayItems(items, button.dataset.type);
+                    localStorage.setItem("query", query);
+                    localStorage.setItem("is_end", data.meta.is_end);
+
+                } catch (error) {
+                    console.log(error.message);
+                }
+            })
+        })
+        // document.getElementById("webSearch").addEventListener("click", async (e) => {
+        //     try {
+        //         const page = localStorage.getItem("page") || localStorage.setItem("page", 1);
+        //         const query = document.getElementById("input").value;
+        //         const response = await fetch(`http://localhost:3000/webSearch?q=${query}&p=${page}`);
+        //         const data = await response.json();
+
+        //         const items = data.documents;
+        //         displayItems(items);
+        //         localStorage.setItem("query", query);
+        //         localStorage.setItem("is_end", data.meta.is_end);
+
+        //     } catch (error) {
+        //         console.log(error.message);
+        //     }
+        // })
+
+        function displayItems(items, type) {
+            const ul = document.getElementById("ul");
+            ul.innerHTML = ``;
+            for (const item of items) {
+                const li = document.createElement("li");
+                if (type === "web") {
+                    li.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <p>${item.contents}</p>
+                    <a href="${item.url}">${item.url}</a>
+                    `;
+                } else if (type === "image") {
+                    li.innerHTML = `
+                    <a href="${item.image_url}"><img src="${item.thumbnail_url}" alt=""></a>
+                    <p>${item.display_sitename}</p>
+                    <p>${item.doc_url}</p>
+                    <a href="${item.url}">${item.url}</a>
+                    `;
+                } else if (type === "video") {
+                    li.innerHTML = `
+                    <h3>${item.title}</h3>
+                    <img src="${item.thumbnail}" alt="">
+                    <a href="${item.url}">${item.url}</a>
+                    <p>datetime: ${item.datetime}</p>
+                    <p>author: ${item.author}</p>
+                    `;
+                }
+                ul.appendChild(li);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -42,9 +42,14 @@ app.get("/login", (req, res) => {
   // 네이버로 가라고 한다.
   const state = Math.random().toString(36).substring(6); //랜덤 글자(0-9a-z)
   const authURL = `${naver_auth_url}?response_type=code&client_id=${client_id}&redirect_url=${REDIRECT_URL}&state=${state}`;
-  res.redirect(authURL);
-  // 유저없으면 캡챠로 ㄱㄱ
-  // res.redirect("/captcha");
+  const captcha = req.session.captcha || false;
+  if (captcha) {
+    req.session.destroy();
+    res.redirect(authURL);
+  } else {
+    // captcha 결과 없으면 캡챠로 ㄱㄱ
+    res.redirect("/captcha");
+  }
 });
 app.get("/captcha", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "captcha.html"));
@@ -166,6 +171,8 @@ app.get("/captcha/result", function (req, res) {
       res.writeHead(200, { "Content-Type": "text/json;charset=utf-8" });
       const captchaResult = JSON.parse(body);
       console.log("캡챠 결과 :", captchaResult);
+      // 세션에 캡차 결과 저장
+      req.session.captchaResult = captchaResult;
       if (captchaResult.result) {
         res.redirect("/login");
       } else {
