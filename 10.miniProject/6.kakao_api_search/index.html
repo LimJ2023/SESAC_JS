@@ -45,22 +45,7 @@
                 }
             })
         })
-        // document.getElementById("webSearch").addEventListener("click", async (e) => {
-        //     try {
-        //         const page = localStorage.getItem("page") || localStorage.setItem("page", 1);
-        //         const query = document.getElementById("input").value;
-        //         const response = await fetch(`http://localhost:3000/webSearch?q=${query}&p=${page}`);
-        //         const data = await response.json();
 
-        //         const items = data.documents;
-        //         displayItems(items);
-        //         localStorage.setItem("query", query);
-        //         localStorage.setItem("is_end", data.meta.is_end);
-
-        //     } catch (error) {
-        //         console.log(error.message);
-        //     }
-        // })
 
         function displayItems(items, type) {
             const ul = document.getElementById("ul");

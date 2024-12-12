@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <label for="start">출발지 :</label>
+        <input type="text" id="start" placeholder="남산타워">
+        <br>
+        <label for="start">도착지 : </label>
+        <input type="text" id="end" placeholder="63빌딩">
+        <br>
+        <button onclick="findRoute()">경로찾기</button>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        var map = L.map('map').setView([37.560, 126.986], 15);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function findRoute() {
+            const startInput = document.getElementById("start").value;
+            const endInput = document.getElementById("end").value;
+
+            if (!startInput || !endInput) {
+                alert("출발지, 도착지 좌표를 입력해주세요.")
+            }
+            var startCoord = null;
+            var endCoord = null;
+            // 외부에 fetch를 해서 물어본다.
+
+
+
+            // 결과를 받아와서 파싱한다.
+            const fetchStart = fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${startInput}`).then((response) => {
+                return response.json()
+            }).then((data) => {
+                startCoord = [data[0].lat, data[0].lon];
+                L.marker(startCoord).addTo(map).bindPopup("출발지").openPopup();
+            })
+            const fetchEnd = fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${endInput}`).then((response) => {
+                return response.json()
+            }).then((data) => {
+                endCoord = [data[0].lat, data[0].lon];
+                L.marker(endCoord).addTo(map).bindPopup("도착지").openPopup();
+            })
+
+            //결과를 받아오기 전에 루트를 만들면 안되니까 promise all로 묶어서 처리 후 루트 설정함
+            const routePath = Promise.all([fetchStart, fetchEnd]).then(() => {
+                // 검증코드 생략
+                var route = L.polyline([startCoord, endCoord], { color: 'blue' }).addTo(map);
+                // 라우트 쪽으로 포커스 옮기기
+                map.fitBounds(route.getBounds());
+            })
+
+            // async await 
+            async function findRoute2() {
+                var startRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${startInput}`);
+                var startData = await startRes.json();
+            }
+
+        }
+    </script>
+</body>
+
+</html>

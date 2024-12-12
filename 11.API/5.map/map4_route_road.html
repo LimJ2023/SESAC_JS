@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <label for="start">출발지 :</label>
+        <input type="text" id="start" placeholder="출발지 입력">
+        <br>
+        <label for="start">도착지 : </label>
+        <input type="text" id="end" placeholder="도착지 입력">
+        <br>
+        <button onclick="findRoute()">경로찾기</button>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script>
+
+        var map = L.map('map').setView([37.560, 126.986], 15);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        function findRoute() {
+            const startInput = document.getElementById("start").value;
+            const endInput = document.getElementById("end").value;
+
+            if (!startInput || !endInput) {
+                alert("출발지, 도착지 좌표를 입력해주세요.")
+            }
+
+
+        }
+
+        var origin = {
+            latitude: 37.5199,
+            longityde: 126.9406
+        };
+        var destination = {
+            latitude: 37.5512,
+            longityde: 126.9882
+        };
+        var startIcon = L.icon({
+            iconUrl: "start.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41], // 마커 이미지의 어느 지점이 실제 지도에 맞춰질지
+            popupAnchor: [1, -34] // 마커 포인트로부터 이미지가 나타날 곳
+        })
+        var control = L.Routing.control({
+            waypoints: [
+                L.latLng(origin.latitude, origin.longityde),
+                L.latLng(destination.latitude, destination.longityde)
+            ],
+            plan: L.Routing.plan(
+                [
+                    L.latLng(origin.latitude, origin.longityde),
+                    L.latLng(destination.latitude, destination.longityde)
+                ],
+                {
+                    createMarker: function (i, wp) {
+                        // 웨이포인트 인덱스 i, 웨이포인트 객체 wp
+                        var marker = L.marker(wp.latLng, {
+                            icon: i === 0 ? startIcon : startIcon,
+                            draggable: true,
+                        });
+
+                        markerk.bindPopup("Waypoint " + (i - 1)).openPopup();
+                        return marker;
+                    },
+                }
+            ),
+            lineOptions: {
+                styles: [{ color: "blue", weight: 5, opcity: 0.5 }]
+            },
+        }).addTo(map);
+    </script>
+</body>
+
+</html>
