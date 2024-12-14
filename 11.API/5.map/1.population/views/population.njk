@@ -20,8 +20,7 @@
 
     <div id="map"></div>
     <script>
-        // var seoulData = {{ seoulData, safe }};
-        console.log(seoulData);
+        var seoulData = {{ data | safe}}
 
         var map = L.map('map').setView([37.560, 126.986], 15);
 
@@ -34,7 +33,7 @@
             var population = parseInt(seoulData[i].population);
             var radius = calculateMarkerRadius(population);
 
-            var marker = L.circleMaker([seoulData[i].lat, seoulData[i].lng], {
+            var marker = L.circleMarker([seoulData[i].lat, seoulData[i].lng], {
                 radius: radius,
                 fillColor: "red",
                 color: "blue",
@@ -42,13 +41,13 @@
                 fillOpacity: 0.3
             }).addTo(map);
 
-            marker.bindTooltop(seoulData[i].district, {
+            marker.bindTooltip(seoulData[i].district, {
                 permanent: true,
                 direction: "center",
                 className: "marker-label"
             });
-            marker.bindPopup("<b>" + seoulData[i].district + "</b><br> 인구 : ", seoulData[i].population);
-            // markers.push(marker);
+            marker.bindPopup("<b>" + seoulData[i].district + "</b><br> 인구 : " + seoulData[i].population);
+            {# markers.push(marker); #}
         }
 
         function calculateMarkerRadius(population) {

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>회원가입</h1>
+    <form id="signup">
+        <input type="email" id="email" name="email" required placeholder="이메일" />
+        <br>
+        <button type="button" onclick="sendSignupRequest()">인증코드 발송</button>
+    </form>
+    <div id="verify">
+        <input type="text" id="code" name="code" required placeholder="인증코드입력" />
+    </div>
+    <p id="signupResult">　</p>
+
+
+    <p id="verificationResult"></p>
+    <form onsubmit="return sendVerifyRequest(event)">
+        <input type="password" id="password" required placeholder="비밀번호"> <br>
+        <input type="password" id="password2" required placeholder="비밀번호 확인"> <br>
+        <p id="checkPass"></p>
+        <button type="submit">회원가입</button>
+    </form>
+
+    <script src="./signup.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 import React from 'react'
 import WebResult from './WebResult'
 import ImageResult from './ImageResult'
+import VideoResult from './VideoResult'
 
 function SearchResults({results, searchType}) {
     
@@ -18,7 +19,7 @@ function SearchResults({results, searchType}) {
                     <ImageResult {...result}/>
                 )}
                 {searchType === "video" && (
-                    <ImageResult {...result}/>
+                    <VideoResult {...result}/>
                 )}
                 </li>
             )) : (
