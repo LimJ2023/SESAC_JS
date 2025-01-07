@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>웹소켓 프로그레스</h1>
+    <button id="startButton">시작</button>
+    <button id="stopButton">중지</button>
+    <div>
+        <progress id="progressBar" value="0" max="100"></progress>
+        <p id="status">시작버튼을 클릭하세요</p>
+    </div>
+
+    <script>
+
+        startButton.addEventListener("click", startProgress);
+
+        function startProgress() {
+            const startButton = document.getElementById("startButton");
+            const status = document.getElementById("status");
+            const progressBar = document.getElementById("progressBar");
+            const stopButton = document.getElementById("stopButton");
+            const socket = new EventSource("http://localhost:3000/progress");
+            socket.onmessage = (event) => {
+                console.log(event.data);
+                const data = JSON.parse(event.data);
+                status.textContent = `Progress: ${data.progress}%`;
+                progressBar.value = data.progress;
+                if (data.progress >= 100) {
+                    socket.close();
+                    status.textContent = "프로그레스 완료!";
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

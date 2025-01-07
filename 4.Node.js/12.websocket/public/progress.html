@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>웹소켓 프로그레스</h1>
+    <button id="startButton">시작</button>
+    <div>
+        <progress id="progressBar" value="0" max="100"></progress>
+        <p id="status">시작버튼을 클릭하세요</p>
+    </div>
+
+    <script>
+        const startButton = document.getElementById("startButton");
+        const status = document.getElementById("status");
+        const progressBar = document.getElementById("progressBar");
+        const socket = new WebSocket("ws://localhost:8000");
+
+        startButton.addEventListener("click", startProgress);
+        function startProgress() {
+            socket.send("start");
+
+            socket.onmessage = (event) => {
+                console.log(event.data);
+                const data = JSON.parse(event.data);
+                console.log(data);
+                progressBar.value = data.progress;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

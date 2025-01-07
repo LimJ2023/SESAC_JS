@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>sse</h1>
+    <div id="output"></div>
+
+    <script>
+        // sse 연결 생성
+        const eventSource = new EventSource("http://localhost:3000/events");
+
+        //메세지 수신되었다면?
+        eventSource.onmessage = (event) => {
+            const ouputDiv = document.getElementById("output");
+            const newMessage = document.createElement("p");
+            newMessage.textContent = `서버 메세지 : ${event.data}`;
+            ouputDiv.appendChild(newMessage);
+        }
+
+        eventSource.onerror = (error) => {
+            console.error("서버 연결 실패", error);
+        } 
+    </script>
+</body>
+
+</html>
