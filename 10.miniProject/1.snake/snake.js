@@ -89,17 +89,6 @@ function moveSnake() {
 
   snake.unshift(head);
   snake.pop();
-  // 안에 갇혀있게 하기
-  // if (snake[0].x * blockSize >= winWidth) {
-  //   snake[0].x = (winWidth - blockSize) / blockSize;
-  // } else if (snake[0].x * blockSize <= 0) {
-  //   snake[0].x = 0;
-  // }
-  // if (snake[0].y * blockSize <= 0) {
-  //   snake[0].y = 0;
-  // } else if (snake[0].y * blockSize >= winHeight) {
-  //   snake[0].y = (winHeight - blockSize) / blockSize;
-  // }
 }
 
 document.addEventListener("keydown", (e) => {
@@ -130,7 +119,7 @@ function checkBodyCollision() {
     return true;
   } else {
     return false;
-  }
+    }
 }
 function checkDirection() {
   if (

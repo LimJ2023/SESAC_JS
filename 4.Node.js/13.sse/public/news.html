@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .resent {
+            background-color: palegoldenrod;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #news-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>라이브 새싹 뉴스</h1>
+    <div id="news-container"></div>
+    <script>
+        const eventSource = new EventSource("/news");
+        const newsContainer = document.getElementById("news-container");
+        const news = [];
+        eventSource.onmessage = (event) => {
+            newsContainer.innerHTML = "";
+            const data = JSON.parse(event.data);
+            news.unshift(data.news);
+            if (news.length > 5) {
+                news.pop();
+            }
+            for (let i = 0; i < news.length; i++) {
+                if (i === 0) {
+                    newsContainer.innerHTML += "<div class='resent'>" + news[i] + "<hr></div>";
+                } else {
+                    newsContainer.innerHTML += news[i] + "<hr>";
+                }
+            }
+        }
+        setTimeout(() => {
+            const highlightedItem = document.querySelector(".resent");
+            if (highlightedItem) {
+                highlightedItem.classList.toggle("highlight");
+            }
+        }, 500)
+
+        //가장 최근 5개만 표시, 최신을 위에 표시
+        //가장 최근 1개가 업데이트 될때마다 노란색 배경으로 하이라이트 표시
+    </script>
+</body>
+
+</html>
