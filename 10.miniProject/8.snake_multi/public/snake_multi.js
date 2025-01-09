@@ -19,6 +19,26 @@ let score;
 let direction;
 let newDirection;
 
+// 점수 표시
+function createScoreboard() {
+  const scoreboard = document.getElementById('scoreboard');
+  document.body.appendChild(scoreboard);
+}
+
+// 점수 업데이트
+function updateScoreboard(scores) {
+  const scoreboard = document.getElementById('scoreboard');
+  scoreboard.innerHTML = '<h3>점수판</h3>';
+  scores.sort((a, b) => b.score - a.score); // 높은 점수순으로 정렬
+  
+  scores.forEach(player => {
+    const scoreElement = document.createElement('div');
+    scoreElement.style.color = player.color;
+    scoreElement.textContent = `${player.userName}: ${player.score}점`;
+    scoreboard.appendChild(scoreElement);
+  });
+}
+
 socket.addEventListener("message", (event) => {
   const data = JSON.parse(event.data);
   console.log("서버에서 받은 데이터", data);
@@ -27,11 +47,13 @@ socket.addEventListener("message", (event) => {
     winHeight = data.winHeight;
     blockSize = data.blockSize;
     boardSize = data.boardSize;
+    createScoreboard();
   }
   if(data.type === "update"){
     snakes = new Map(Object.entries(data.snakes));
     food = data.food;
     draw();
+    updateScoreboard(data.scores);
   }
   if(data.type === "end"){
     

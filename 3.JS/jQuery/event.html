@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="myDiv">
+        <span id="displayText">hover me</span>
+    </div>
+    <button id="myBtn">색상바꾸기</button>
+    <script>
+        // 제이쿼리 문법
+        $(document).ready(function () {
+            const myDiv = $("#myDiv");
+            const displayText = $("#displayText");
+
+            $("#myBtn").click(() => {
+                const color = getRandomColor();
+                $("#myDiv").css("background-color", color);
+            })
+            // hover 함수의 첫번째 인자, 두번째 인자 있음
+            myDiv.hover(() => {
+                const color = myDiv.css("background-color");
+                displayText.text("현재 색상 : " + color);
+                displayText.css("color", "white");
+            }, () => {
+                displayText.text("Hober me");
+                displayText.css("color", "black")
+            })
+        })
+        function getRandomColor() {
+            // 6글자의 색상값 rgb 생성
+            return "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0");
+        }
+    </script>
+</body>
+
+</html>

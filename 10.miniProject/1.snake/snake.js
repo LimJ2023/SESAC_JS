@@ -14,8 +14,8 @@ const blockSize = 20;
 let direction = "right"; // 이동방향
 let newDirection = "";
 const snakeSpped = 200;
-const winWidth = 400;
-const winHeight = 400;
+const winWidth = 800;
+const winHeight = 800;
 let score = 0;
 let head = { x: snake[0].x, y: snake[0].y };
 let tail;
@@ -36,14 +36,14 @@ function draw() {
   moveSnake();
   checkEatFood();
 }
-function checkEndGame() {
+function checkEndGame(x,y,body) {
   // 게임오버
   if (
-    snake[0].x * blockSize > winWidth ||
-    snake[0].x * blockSize < 0 ||
-    snake[0].y * blockSize < 0 ||
-    snake[0].y * blockSize > winHeight ||
-    checkBodyCollision()
+    x * blockSize > winWidth ||
+    x * blockSize < 0 ||
+    y * blockSize < 0 ||
+    y * blockSize > winHeight ||
+    checkBodyCollision(x,y,body)
   ) {
     console.log("게임오버");
     scoreDiv.innerText = score + "점";
@@ -119,7 +119,7 @@ function checkBodyCollision() {
     return true;
   } else {
     return false;
-    }
+  }
 }
 function checkDirection() {
   if (

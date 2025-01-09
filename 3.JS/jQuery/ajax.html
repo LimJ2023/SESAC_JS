@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>ajax 시작</h1>
+    <button id="loadBtn">데이터 불러오기</button>
+    <div id="result"></div>
+    <script>
+        $(document).ready(() => {
+            $("#loadBtn").click(() => {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:3000/data",
+                    success: function (response) {
+                        $("#result").html(
+                            `
+                                <h2> ${response.title} </h2>
+                                <p> ${response.content} </p>
+                            `
+                        );
+                    },
+                    error: () => {
+                        console.log("통신에러");
+                        $("#result").html(
+                            `
+                                <p> 통신에러 </p>
+                            `
+                        );
+                    }
+                });
+            })
+        })
+
+    </script>
+</body>
+
+</html>
