@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>환율 챗봇</h1>
+
+    <div class="chat-container">
+        <div id="chatContainer">
+            <p>대화를 시작해보세요</p>
+        </div>
+
+        <input type="text" id="questionInput" placeholder="질문을 입력하세요.">
+        <button id="sendButton">전송</button>
+    </div>
+
+    <div class="exchange-rate-section">
+        <h2>환율변환</h2>
+        <input type="number" id="amountInput" placeholder="금액 입력">
+        <select id="currencyFromSelect">
+            <option value="KRW">KRW</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+        <span>-></span>
+        <select id="currencyToSelect">
+            <option value="KRW">KRW</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+
+        <button onclick="convertCurrency()">환율 변환</button>
+        <div id="conversionResult"></div>
+    </div>
+
+    <!-- <script src="script.js"> -->
+    </script>
+    <script src="currency.js"></script>
+</body>
+
+</html>
